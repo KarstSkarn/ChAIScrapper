@@ -57,7 +57,7 @@ Note: **You maybe need to enable Discord Developer Features in your Discord Opti
 Note #2: **For if some reason you somehow messed badly with that file and causes crashes or any sort of error you can just delete it and open ChAIScrapper.exe and will automatically create a new blank file for you to fill.**
 
 ### Set your Chrome user data path
-Open with notepad the file "ChAIScrapperLauncher.bat" and modify the path "C:\Users\YOUR_USER_NAME\AppData\Local\Google\Chrome\User Data" with your Windows username.
+Open with notepad the file "ChAIScrapperLauncher.bat" and modify the path `C:\Users\YOUR_USER_NAME\AppData\Local\Google\Chrome\User Data` with your Windows username.
 Also ensure that the Chrome path corresponds with where your local Chrome installation is located. Finally save changes and close.
 
 Note: **Ensure that "ChAIScrapperLauncher.bat" is in the same directory than "ChAIScrapper.exe"!**
