@@ -34,7 +34,10 @@ Note: **Never share your Discord Bot token with anyone**
 
 ### Add permissions to the Discord Bot
 In the Discord Developers Portal under the category "Installation" and the tab "Guild Install" click and choose "Bot". Then add the following permissions:
-`Manage Messages, Read Message History, Send Messages, Attach Files, View Channels`
+`Manage Messages, Read Message History, Send Messages, Attach Files, View Channels`.
+
+Finally go to the Discord Developers Portal tab "Bot" and scroll all the way down. Enable under the "Privileged Gateway Intents" category the following intent options:
+`PRESENCE INTENT - SERVER MEMBERS INTENT - MESSAGE CONTENT INTENT` 
 
 ### Invite the Bot to your Discord
 Now you can invite your newly created Discord bot to the server where you want to use it. Due to how ChAIScrapper works the bot cannot run on more than one server at a time so make sure it is the Discord server where you really want to have it.

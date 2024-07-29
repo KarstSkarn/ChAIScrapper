@@ -1,0 +1,7 @@
+C:\Users\Falken\Documents\ChAIScrapperGitHub\ChAIScrapper\ChAIScrapper\bin\Release\net6.0\publish\win-x64\ChAIScrapper.pdb
+C:\Users\Falken\Documents\ChAIScrapperGitHub\ChAIScrapper\ChAIScrapper\bin\Release\net6.0\publish\win-x64\selenium-manager\linux\selenium-manager
+C:\Users\Falken\Documents\ChAIScrapperGitHub\ChAIScrapper\ChAIScrapper\bin\Release\net6.0\publish\win-x64\selenium-manager\macos\selenium-manager
+C:\Users\Falken\Documents\ChAIScrapperGitHub\ChAIScrapper\ChAIScrapper\bin\Release\net6.0\publish\win-x64\selenium-manager\windows\selenium-manager.exe
+C:\Users\Falken\Documents\ChAIScrapperGitHub\ChAIScrapper\ChAIScrapper\bin\Release\net6.0\publish\win-x64\libmp3lame.32.dll
+C:\Users\Falken\Documents\ChAIScrapperGitHub\ChAIScrapper\ChAIScrapper\bin\Release\net6.0\publish\win-x64\libmp3lame.64.dll
+C:\Users\Falken\Documents\ChAIScrapperGitHub\ChAIScrapper\ChAIScrapper\bin\Release\net6.0\publish\win-x64\ChAIScrapper.exe

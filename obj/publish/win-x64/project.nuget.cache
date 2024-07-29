@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Dgm0Y6PPFA2j/xYkw9HzvZLLp291DjZao8CmFw8fcDFDoGO+MVVbpPSL7eUmzHZCqx/pDacmjS2Gi8MQZPuq/g==",
+  "dgSpecHash": "VwNZVpLe3SDV1hfaj//CBwTSWIKG5nlS7MtHeLhsspfZ9swZfIGnmhVj+qq446gdxsfzDbJxkW+YhhJxzGTcGA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
+  "projectFilePath": "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper\\ChAIScrapper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Falken\\.nuget\\packages\\discord.net\\3.15.2\\discord.net.3.15.2.nupkg.sha512",
     "C:\\Users\\Falken\\.nuget\\packages\\discord.net.commands\\3.15.2\\discord.net.commands.3.15.2.nupkg.sha512",
