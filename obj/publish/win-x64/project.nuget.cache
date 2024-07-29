@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "dgSpecHash": "Dgm0Y6PPFA2j/xYkw9HzvZLLp291DjZao8CmFw8fcDFDoGO+MVVbpPSL7eUmzHZCqx/pDacmjS2Gi8MQZPuq/g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Falken\\.nuget\\packages\\discord.net\\3.15.2\\discord.net.3.15.2.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\discord.net.commands\\3.15.2\\discord.net.commands.3.15.2.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\discord.net.core\\3.15.2\\discord.net.core.3.15.2.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\discord.net.interactions\\3.15.2\\discord.net.interactions.3.15.2.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\discord.net.rest\\3.15.2\\discord.net.rest.3.15.2.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\discord.net.webhook\\3.15.2\\discord.net.webhook.3.15.2.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\discord.net.websocket\\3.15.2\\discord.net.websocket.3.15.2.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\htmlagilitypack\\1.11.61\\htmlagilitypack.1.11.61.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\inputsimulator\\1.0.4\\inputsimulator.1.0.4.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio\\2.2.1\\naudio.2.2.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio.asio\\2.2.1\\naudio.asio.2.2.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio.core\\2.2.1\\naudio.core.2.2.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio.lame\\2.1.0\\naudio.lame.2.1.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio.midi\\2.2.1\\naudio.midi.2.2.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio.vorbis\\1.5.0\\naudio.vorbis.1.5.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio.wasapi\\2.2.1\\naudio.wasapi.2.2.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\naudio.winmm\\2.2.1\\naudio.winmm.2.2.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\nvorbis\\0.10.5\\nvorbis.0.10.5.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\openqa.selenium.chrome.chromedriverextensions\\1.2.0\\openqa.selenium.chrome.chromedriverextensions.1.2.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\selenium.webdriver\\4.22.0\\selenium.webdriver.4.22.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\selenium.webdriver.chromedriver\\126.0.6478.18200\\selenium.webdriver.chromedriver.126.0.6478.18200.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.configuration.configurationmanager\\8.0.0\\system.configuration.configurationmanager.8.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.diagnostics.performancecounter\\8.0.0\\system.diagnostics.performancecounter.8.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.interactive.async\\6.0.1\\system.interactive.async.6.0.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.linq.async\\6.0.1\\system.linq.async.6.0.1.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.reactive\\6.0.0\\system.reactive.6.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.security.cryptography.protecteddata\\8.0.0\\system.security.cryptography.protecteddata.8.0.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.24\\microsoft.netcore.app.runtime.win-x64.6.0.24.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.24\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.24.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.24\\microsoft.aspnetcore.app.runtime.win-x64.6.0.24.nupkg.sha512",
+    "C:\\Users\\Falken\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\6.0.24\\microsoft.netcore.app.crossgen2.win-x64.6.0.24.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"InputSimulator 1.0.4\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net6.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+      "libraryId": "InputSimulator",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}

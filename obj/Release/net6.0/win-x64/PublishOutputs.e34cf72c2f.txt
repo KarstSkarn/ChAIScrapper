@@ -1,0 +1,6 @@
+C:\Users\Falken\Documents\NKTSpaceGame\NKTServerSide\NKTCB\NLPBot\bin\Release\net6.0\publish\win-x64\ChAIScrapper.pdb
+C:\Users\Falken\Documents\NKTSpaceGame\NKTServerSide\NKTCB\NLPBot\bin\Release\net6.0\publish\win-x64\selenium-manager\linux\selenium-manager
+C:\Users\Falken\Documents\NKTSpaceGame\NKTServerSide\NKTCB\NLPBot\bin\Release\net6.0\publish\win-x64\selenium-manager\macos\selenium-manager
+C:\Users\Falken\Documents\NKTSpaceGame\NKTServerSide\NKTCB\NLPBot\bin\Release\net6.0\publish\win-x64\selenium-manager\windows\selenium-manager.exe
+C:\Users\Falken\Documents\NKTSpaceGame\NKTServerSide\NKTCB\NLPBot\bin\Release\net6.0\publish\win-x64\opus.dll
+C:\Users\Falken\Documents\NKTSpaceGame\NKTServerSide\NKTCB\NLPBot\bin\Release\net6.0\publish\win-x64\ChAIScrapper.exe
