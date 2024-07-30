@@ -1,5 +1,9 @@
 # ChAIScrapper 1.0
 *By KarstSkarn - https://karstskarn.carrd.co*
+*If you liked it you can support me on https://ko-fi.com/karstskarn*
+*It motivates me for this and many other projects!*
+
+Demo Discord: https://discord.gg/BCGYfyCAUb
 
 ### Disclaimer
 This program has been created for experimental and demonstrative purposes of the functionalities that the application of AI's such as CharacterAI's could have in an environment such as Discord.
