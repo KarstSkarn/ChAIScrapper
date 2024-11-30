@@ -192,7 +192,10 @@ This pauses the current reproduction of the video but doesn't end it so the bot 
 This resumes the reproduction of any video that has been paused.
 
 ------------
-Repository Disclaimer: Due to the size of Chromium's dll files they are not included in the repository. Download a standalone Chromium version and put it into the Chromium folder if you are going to edit the code.
+
+## Repository Disclaimer
+Due to the size of Chromium's dll files they are not included in the repository. Download a standalone Chromium version and put it into the Chromium folder if you are going to edit the code.
+
 ------------
 By KarstSkarn 2024
 [![CC Licence](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC Licence")](https://creativecommons.org/licenses/by-nc-sa/4.0/ "CC Licence")
