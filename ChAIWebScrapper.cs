@@ -31,33 +31,13 @@ namespace ChAIScrapper
         {
             ChromeOptions chromeOptions = new ChromeOptions();
 
-            if (Global.chromeHeadlessMode)
-            {
-                /*
-                chromeOptions.AddArgument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.999 Safari/537.36");
-                chromeOptions.AddArgument("--window-size=1400,900");
-                chromeOptions.AddArgument("--start-maximized");
-                chromeOptions.AddArgument("--headless");
-                chromeOptions.AddArgument("--disable-gpu");
-                chromeOptions.AddArgument("--no-sandbox");
-                chromeOptions.AddArgument("--disable-dev-shm-usage");
-                chromeOptions.AddArgument("--disable-web-security");
-                */
-                chromeOptions.DebuggerAddress = Global.chromeDebuggerAddress;
-            }
-            else
-            {
-                chromeOptions.DebuggerAddress = Global.chromeDebuggerAddress;
-            }
+            chromeOptions.DebuggerAddress = Global.chromeDebuggerAddress;
+            chromeOptions.BinaryLocation = Global.portableChromiumPath;
 
             bool flagFirstTime = true;
 
             using (var driver = new ChromeDriver(chromeOptions))
             {
-                if (Global.chromeHeadlessMode)
-                {
-                    AppDomain.CurrentDomain.ProcessExit += (sender, e) => OnProcessExit(driver);
-                }
                 driver.Navigate().GoToUrl(Global.characterAIChatURL);
 
                 if (flagFirstTime && Global.initialBotBriefing != "")
@@ -100,6 +80,16 @@ namespace ChAIScrapper
                             try
                             {
                                 string prePrompt = "";
+                                if (Global.simulatedInputsCounter >= 30 || Global.refreshFlag)
+                                {
+                                    Global.simulatedInputsCounter = 0;
+                                    Global.refreshFlag = false;
+                                    driver.Navigate().Refresh();
+                                    Global.lastPageRefresh = DateTime.Now;
+                                    Thread.Sleep(2000);
+                                    ScrapeAnswers(driver, true);
+
+                                }
                                 if ((DateTime.Now - Global.lastPageRefresh).TotalMinutes >= 20)
                                 {
                                     driver.Navigate().Refresh();
@@ -138,6 +128,10 @@ namespace ChAIScrapper
                                                     virtualCaptions = @"[ The YouTube video says "" " + virtualCaptions + @" "" ]";
                                                     string virtualPrompt = " [ You may react to the video as you wish! ]";
                                                     Global.botYTVirtualWatchTime += Global.botYTVirtualWatchPace;
+                                                    if (Global.botYTVirtualWatchTime > Global.botYTWatchData.LENGTH)
+                                                    {
+                                                        Global.botYTVirtualWatchTime = Global.botYTWatchData.LENGTH;
+                                                    }
                                                     prePrompt += virtualWatchString + virtualCaptions + virtualPrompt;
                                                     ChAIScrapperProgram.Write("Simulated Input: " + virtualWatchString + virtualCaptions + virtualPrompt);
                                                     Global.botYTVirtualWatchLocalTime = DateTime.Now;
@@ -146,7 +140,7 @@ namespace ChAIScrapper
                                                 else
                                                 {
                                                     string virtualWatchString = "";
-                                                    virtualWatchString = @"[ YouTube video ended! You check the comments and the most liked comment states: "" " + Global.botYTWatchData.YTMAINCOMMENT + @" "" ]";
+                                                    virtualWatchString = @"[ YouTube video ended! ]"; // You check the comments and the most liked comment states: "" " + Global.botYTWatchData.YTMAINCOMMENT + @" "" ]";
                                                     prePrompt += virtualWatchString;
                                                     ChAIScrapperProgram.Write("Simulated Input: " + virtualWatchString);
                                                     Global.botYTVirtualWatchLocalTime = DateTime.Now;
@@ -183,8 +177,10 @@ namespace ChAIScrapper
                                         {
                                             Global.lastDiscordInteractionTime = DateTime.Now;
                                             Global.randomIdleInteraction = Global.mainRandom.Next(Global.idleMin, Global.idleMax);
-                                            string idleString = @"[ * NOBODY WROTE ON THE DISCORD CHAT FOR " + Math.Floor(lastInteractionSpan.TotalMinutes).ToString() + @" MINUTES. "
-                                            + @"YOU MAY TRY TO PING SOMEONE OR EVERYONE AND ASK FOR CHAT OR ALTERNATIVELY ENGAGE YOURSELF INTO AN ACTIVITY MEANWHILE * ]";
+                                            DateTime now = DateTime.Now;
+                                            string formattedDateTime = now.ToString("HH ':' mm '24h format hour' dd 'Day' dddd 'Month' MMMM 'Year' yyyy");
+                                            string idleString = @"( * LOCAL TIME IS " + formattedDateTime + @"* ) ( * NOBODY WROTE ON THE DISCORD CHAT FOR " + Math.Floor(lastInteractionSpan.TotalMinutes).ToString() + @" MINUTES. "
+                                            + @"YOU MAY TRY TO PING SOMEONE OR EVERYONE AND ASK FOR CHAT OR ALTERNATIVELY ENGAGE YOURSELF INTO AN ACTIVITY MEANWHILE * )";
                                             ChAIScrapperProgram.Write("Simulated Input: " + idleString);
                                             SimulateInput(driver, idleString);
                                         }
@@ -205,6 +201,7 @@ namespace ChAIScrapper
                             catch (Exception ex)
                             {
                                 ChAIScrapperProgram.Write("Exception in DC Scrapper Buffer: " + ex.ToString());
+                                Global.AppendToFile("ErrorLog.txt", ex.ToString());
                             }
                         }
                     }
@@ -213,10 +210,6 @@ namespace ChAIScrapper
                         ChAIScrapperProgram.Write("No answers found on the webpage.");
                     }
                     Thread.Sleep(5000);
-                }
-                if (Global.chromeHeadlessMode)
-                {
-                    driver.Quit();
                 }
             }
             return;
@@ -263,6 +256,7 @@ namespace ChAIScrapper
                             catch (NoSuchElementException)
                             {
                                 ChAIScrapperProgram.Write("It was not possible to scrap the current text!");
+                                Global.AppendToFile("ErrorLog.txt", "It was not possible to scrap the current text!");
                             }
                         }
                     }
@@ -284,6 +278,7 @@ namespace ChAIScrapper
                     catch (Exception ex)
                     {
                         ChAIScrapperProgram.Write("It was not possible to scrap the current AI Image!: " + ex.ToString());
+                        Global.AppendToFile("ErrorLog.txt", ex.ToString());
                     }
                 }
                 
@@ -320,6 +315,7 @@ namespace ChAIScrapper
                         catch (Exception ex)
                         {
                             ChAIScrapperProgram.Write("Exception occurred while finding the button: " + ex.ToString());
+                            Global.AppendToFile("ErrorLog.txt", ex.ToString());
                         }
                     }
                 }
@@ -337,13 +333,18 @@ namespace ChAIScrapper
             {
                 try
                 {
-                    var chatBox = driver.FindElement(By.TagName(Global.tagTextbox));
+                    var chatBox = driver.FindElement(By.TagName("textarea"));
                     chatBox.SendKeys(text);
                     chatBox.SendKeys(Keys.Enter);
                 }
                 catch (NoSuchElementException ex)
                 {
                     ChAIScrapperProgram.Write("Chat textarea not found: " + ex.Message);
+                    Global.AppendToFile("ErrorLog.txt", ex.ToString());
+                }
+                finally
+                {
+                    Global.simulatedInputsCounter++;
                 }
             }
         }
@@ -457,7 +458,10 @@ namespace ChAIScrapper
             for (int index = 0; index < e.BytesRecorded; index += 2)
             {
                 var sample = BitConverter.ToInt16(e.Buffer, index);
-                if (Math.Abs(sample) > 300) // Adjusted threshold for detecting sound
+
+                int absSample = (sample == short.MinValue) ? short.MaxValue : Math.Abs(sample);
+
+                if (Math.Abs(absSample) > 300) // Adjusted threshold for detecting sound
                 {
                     soundEverDetected = true;
                     soundDetected = true;

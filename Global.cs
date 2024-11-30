@@ -11,12 +11,16 @@ namespace ChAIScrapper
 {
     public static class Global
     {
-        public static bool chromeHeadlessMode = false;
-        public static string chromeDebuggerAddress = "localhost:9222";
-        public static string characterAIChatURL = "https://character.ai/chat/xuHtpVIs5Pl6XGvIjOKx-8jsIOCm5xi_iG4H19gxOxA";
-        public static string discordBotToken = "";
+        public static string chromiumPort = "9222";
+        public static string chromeDebuggerAddress = "localhost:" + chromiumPort;
+        public static string characterAIChatURL = "https://character.ai/chat/Q19a0VPjYM5v4oYSDutnJDwkhay2Ipb8WYgDzVLFsEs";
+        public static string discordBotToken = "YOUR_DISCORD_BOT_TOKEN_HERE";
         public static ulong discordChannelID = 0;
         public static ulong discordBotUserID = 0;
+
+        public static string portableChromiumPath = @".\Chromium\chrome.exe";
+
+        public static object _errorLogLock = new object();
 
         public static ChAIScrapperProgram.SavedData loadedData = new ChAIScrapperProgram.SavedData();
 
@@ -56,16 +60,36 @@ namespace ChAIScrapper
         public static TimeSpan botYTVirtualWatchPace = TimeSpan.FromSeconds(15);
         public static TimeSpan botYTVirtualWatchTime = TimeSpan.Zero;
         public static DateTime botYTVirtualWatchLocalTime = DateTime.Now;
+        public static string YTWatchBuffer = "";
 
-        public static string tagTextbox = "textarea";
+        public static int simulatedInputsCounter = 0;
+        public static bool refreshFlag = false;
 
         public static object lockWrite = new object();
         public static object lockInternalData = new object();
 
-        public static string initialBotBriefing = @"[ * DON'T ANSWER TO THIS MESSAGE. " +
+        public static string initialBotBriefing = @"[ DON'T ANSWER TO THIS MESSAGE. " +
             @"You are connected to a Discord channel where it can be multiple people. " +
             @"You can tag anyone and answer personally by using @username so using the name " +
-            @"you see from each one in the chat you can tag them. You can also tag @everyone to ping them all! * ]" +
-            @" [ * NOW PLEASE PROCEED TO SALUTE AND PRESENT YOURSELF TO THE CHANNEL * ]";
+            @"you see from each one in the chat you can tag them. You can also tag @everyone to ping them all! ]" +
+            @" [ NOW PLEASE PROCEED TO SALUTE AND PRESENT YOURSELF TO THE CHANNEL ]";
+
+        public static void AppendToFile(string filePath, string content)
+        {
+            lock (Global._errorLogLock)
+            {
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(filePath, append: true))
+                    {
+                        writer.WriteLine(content);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred while writing the error log: {ex.Message}");
+                }
+            }
+        }
     }
 }

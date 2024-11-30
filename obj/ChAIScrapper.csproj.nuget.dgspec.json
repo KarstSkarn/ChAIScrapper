@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper\\ChAIScrapper.csproj": {}
+    "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\ChAIScrapper.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper\\ChAIScrapper.csproj": {
+    "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\ChAIScrapper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper\\ChAIScrapper.csproj",
+        "projectUniqueName": "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
         "projectName": "ChAIScrapper",
-        "projectPath": "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper\\ChAIScrapper.csproj",
+        "projectPath": "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
         "packagesPath": "C:\\Users\\Falken\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Falken\\Documents\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper\\obj\\",
+        "outputPath": "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\VStudio\\Visual Studio Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\Falken\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,11 +46,11 @@
           "dependencies": {
             "Discord.Net": {
               "target": "Package",
-              "version": "[3.15.2, )"
+              "version": "[3.16.0, )"
             },
             "HtmlAgilityPack": {
               "target": "Package",
-              "version": "[1.11.61, )"
+              "version": "[1.11.71, )"
             },
             "InputSimulator": {
               "target": "Package",
@@ -78,15 +78,15 @@
             },
             "Selenium.WebDriver": {
               "target": "Package",
-              "version": "[4.22.0, )"
+              "version": "[4.27.0, )"
             },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[126.0.6478.18200, )"
+              "version": "[131.0.6778.8500, )"
             },
             "System.Diagnostics.PerformanceCounter": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.0.0, )"
             }
           },
           "imports": [
@@ -105,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

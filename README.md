@@ -1,4 +1,4 @@
-# ChAIScrapper 1.0
+# ChAIScrapper Chromium Version 2.0
 *By KarstSkarn - https://karstskarn.carrd.co*
 
 *If you liked it you can support me on https://ko-fi.com/karstskarn*
@@ -6,7 +6,7 @@
 *It motivates me for this and many other projects!*
 
 
-Demo Discord: https://discord.gg/BCGYfyCAUb
+Demo/Assistance Discord: https://discord.com/invite/d9rNwkerZw
 
 ### Disclaimer
 This program has been created for experimental and demonstrative purposes of the functionalities that the application of AI's such as CharacterAI's could have in an environment such as Discord.
@@ -26,7 +26,7 @@ The use of this program and its possible liabilities are the sole responsibility
 # Setup Guide
 The setup of ChAIScrapper requires the user to customize some parameters for its operation. These steps are simple and require no prior knowledge of any kind.
 
-Note: **ChAIScrapper requires Chrome Installed**
+Note: **ChAIScrapper Chromium 2.0 o longer requires Chrome Installed** It uses it's own standalone Chromium executable.
 
 ### Create a Discord Bot
 Due to its operation ChAIScrapper requires a Discord bot to be created **exclusively** for its operation. This is a simple task that **any Discord user** can perform through the Discord developer portal.
@@ -55,7 +55,7 @@ Also make sure that the bot either through roles or personally has sufficient pe
 Now the only thing left to do is to open with notepad the ChAISData.xml file.
 
 Put the Discord bot token in the markdown
-`<DISCORDTOKEN>YOUR_DISCORD_TOKEN_HERE</DISCORDTOKEN>` section.
+`<DISCORDTOKEN>YOUR_DISCORD_BOT_TOKEN_HERE</DISCORDTOKEN>` section.
 
 Then in your Discord right click on the text channel you want the bot to read and write on. In the drop-down menu select the “Copy Channel ID” option.
 Paste the Discord Channel ID in the “Copy Channel ID” section.
@@ -70,36 +70,31 @@ Note: **You maybe need to enable Discord Developer Features in your Discord Opti
 
 Note #2: **For if some reason you somehow messed badly with that file and causes crashes or any sort of error you can just delete it and open ChAIScrapper.exe and will automatically create a new blank file for you to fill.**
 
-### Set your Chrome user data path
-Open with notepad the file "ChAIScrapperLauncher.bat" and modify the path `C:\Users\YOUR_USER_NAME\AppData\Local\Google\Chrome\User Data` with your Windows username.
-Also ensure that the Chrome path corresponds with where your local Chrome installation is located. Finally save changes and close.
-
-Note: **Ensure that "ChAIScrapperLauncher.bat" is in the same directory than "ChAIScrapper.exe"!**
-
 ## Starting the Service
 
 To start the bot, follow a simple procedure.
 
-* **Close all the Chrome tabs you have open** ( Don't worry, once the bot is started you can open them again! )
-* Execute the file **ChAIScrapperLauncher.bat** not the .exe directly! 
- * A Chrome tab should open and automatically redirect to the CharacterAI URL listed in the “ChAISData.xml” file.
-* At the same time, the ChAIScrapper service window should open in console mode.
+* Execute the file **ChAIScrapperChromiumLauncher.bat** not the .exe directly! This Will launch Chromium. **You always need to launch Chromium before launching the actual executable.**
+* If it's the first time launching this service go manually to the Character AI Webpage and login yourself with the account you wish to be used. Note that the account data Will be stored in the Chromium/UsersData.
+* If needed (To avoid pop-ups) log-in with your Google Account in the Chromium window itself.
+* Please always keep the Chromium window in a square shape and never fully maximize it: Character AI webpage changes its structure depending of the window size.
+* Launch ChAIScrapper.exe.
+* It Will redirect the Chromium window to the Character AI Chat URL stated in the file ChAISData.xml.
 * It will take a few seconds to start the service in Discord and wait until the URL has stabilized enough to capture and send answers.
 * Once the bot has responded to the “initial briefing” that the service makes it is ready to be used!
 
+## Hosting multiple bots in the same computer
+The Chromium version of ChAIScrapper allows the user to host multiple bots in the same computer since each one depends uniquely of a standalone Chromium executable. In order to do this you just need to copy the entire ChAIScrapper folder somewhere else and edit the "ChAIScrapperChromiumLauncher.bat" file. Assign any other port (By default is 9992; you can choose any other port that is not currently in use) and change that port number also in the ChAISData.xml file editing it with Notepad. Then when you launch and execute this copied ChAIScrapper folder it will behave as if the other one doesn't exist allowing multiple bots to be hosted in the same computer. Each one using a different port and folder copy.
+
 ## Common FAQ
 
-* **Why I need to keep Chrome open while the bot is running?**
+* **Why I need to keep Chromium open while the bot is running?**
 
-The program uses web-scrapping techniques to automate and enhance certain functions of the Character AI page. For this you need to open Chrome in a special debug mode in which you can run the program. This debug mode also requires Chrome to be re-started that's why its very important to close all tabs before starting the service.
+The program uses web-scrapping techniques to automate and enhance certain functions of the Character AI page. For this you need to open Chromium in a special debug mode in which you can run the program.
 
-In my case I have a small computer with which I host all kinds of programs in which I have a few tricks done so that Chrome in conjunction with multiple libraries can be opened in “headless” mode in a separate session without having to interfere with the user's main Chrome.
+* **I must keep the Chromium window active?**
 
-Unfortunately that requires severe extra steps in its installation and I didn't see it convenient to add it in this version in a definitive way.
-
-* **I must keep the Chrome window active?**
-
-Sadly as I commented in the previous answer the alternative is too intensive for the average user to be deployed in this version. **It is recommended** to keep the bot Chrome Tab opened despite it can work too with the tab not being visible. The only consideration is that Chrome reduces the resources and refresh rate of the tabs that aren't active and this may result in a noticeable reduction of the bot's answer speed.
+**It is recommended** to keep the bot Chrome Tab opened (Meaning not minimized and obviously not closed at all) despite it can work too with the tab not being visible. The only consideration is that Chromium reduces the resources and refresh rate of the tabs that aren't active and this may result in a noticeable reduction of the bot's answer speed.
 
 A little trick is to keep that Chrome tab into another screen so you can use the rest of the screens freely since in that way Chrome will not reduce the resources that the bot's tab is using.
 
@@ -157,8 +152,14 @@ All bot commands start by the **"!"** character. The only exception is starting 
 Example:
 *// The bot can't read this and won't react to it at all* 
 
+* **!help**
+This command displays the command list.
+
 * **!ping**
 This command results in the Discord Bot service answering "Pong!" just for debugging and online testing purposes.
+
+* **!refresh**
+This command forces the webpage to refresh (Very useful when Character AI gets stuck while generating an answer!).
 
 * **!character [URL]**
 This command allows you to change the ChAIScrapper current character. Once its accepted it will take approximately one minute to completely restart working with that character without any need from the host to do anything.
@@ -177,17 +178,17 @@ This will set a 4 star rating into the bot last answer.
 * **!audio**
 This enables/disables the voice notes system.
 
-* **!watch [URL]**
+* **!ytwatch [URL]**
 This makes the bot start watching any YouTube video.
 Example: *!watch https://www.youtube.com/watch?v=dQw4w9WgXcQ*
 
-* **!stop**
+* **!ytstop**
 This completely stops and ends the reproduction of any YouTube video the bot is currently watching.
 
-* **!pause**
+* **!ytpause**
 This pauses the current reproduction of the video but doesn't end it so the bot can resume it later.
 
-* **!resume**
+* **!ytresume**
 This resumes the reproduction of any video that has been paused.
 
 ------------

@@ -104,7 +104,23 @@ namespace ChAIScrapper
 
                 if (messageContent == "!ping")
                 {
-                    EnqueueMessage(message.Channel.Id, "Pong!");
+                    EnqueueMessage(message.Channel.Id, "> Pong!");
+                    return;
+                }
+
+                if (messageContent == "!help")
+                {
+                    EnqueueMessage(message.Channel.Id, "> **!reset** Resets ChaAIScrapper");
+                    EnqueueMessage(message.Channel.Id, "> **!ytwatch URL** Forces the AI to watch a YT video");
+                    EnqueueMessage(message.Channel.Id, "> **!refresh** Refreshes Character AI webpage");
+                    EnqueueMessage(message.Channel.Id, "> **!fb 1-5** Sets feedback to the last message the AI sent");
+                    EnqueueMessage(message.Channel.Id, "> **!character URL** Changes the current chat used by the AI");
+                    return;
+                }
+
+                if (messageContent == "!refresh")
+                {
+                    Global.refreshFlag = true;
                     return;
                 }
 
@@ -125,7 +141,7 @@ namespace ChAIScrapper
                         else
                         {
                             double remainingSeconds = (5 * 60) - timeDifference.TotalSeconds;
-                            EnqueueMessage(message.Channel.Id, "# You cannot change character that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
+                            EnqueueMessage(message.Channel.Id, "> You cannot change character that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
                             return;
                         }
                     }
@@ -145,13 +161,13 @@ namespace ChAIScrapper
                         else
                         {
                             double remainingSeconds = (5 * 60) - timeDifference.TotalSeconds;
-                            EnqueueMessage(message.Channel.Id, "# You cannot reset the bot that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
+                            EnqueueMessage(message.Channel.Id, "> You cannot reset the bot that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
                             return;
                         }
                     }
                 }
 
-                if (messageContent.StartsWith("!stop"))
+                if (messageContent.StartsWith("!ytstop"))
                 {
                     lock (Global.lockInternalData)
                     {
@@ -161,14 +177,14 @@ namespace ChAIScrapper
                         }
                         else
                         {
-                            EnqueueMessage(message.Channel.Id, "# ⏸" + Global.discordBotIAName + " stopped watching YouTube...");
+                            EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** stopped watching YouTube...");
                             Global.botYTVirtualWatch = false;
                             Global.botYTWatchData = null;
                         }
                     }
                 }
 
-                if (messageContent.StartsWith("!resume"))
+                if (messageContent.StartsWith("!ytresume"))
                 {
                     lock (Global.lockInternalData)
                     {
@@ -176,18 +192,18 @@ namespace ChAIScrapper
                         {
                             if (Global.botYTPause)
                             {
-                                EnqueueMessage(message.Channel.Id, "# ⏸" + Global.discordBotIAName + " resumed YouTube...");
+                                EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** resumed YouTube...");
                                 Global.botYTPause = false;
                             }
                         }
                         else
                         {
-                            EnqueueMessage(message.Channel.Id, "# ⏸" + Global.discordBotIAName + " is not currently watching YouTube!");
+                            EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** is not currently watching YouTube!");
                         }
                     }
                 }
 
-                if (messageContent.StartsWith("!pause"))
+                if (messageContent.StartsWith("!ytpause"))
                 {
                     lock (Global.lockInternalData)
                     {
@@ -195,18 +211,18 @@ namespace ChAIScrapper
                         {
                             if (!Global.botYTPause)
                             {
-                                EnqueueMessage(message.Channel.Id, "# ⏸" + Global.discordBotIAName + " paused YouTube...");
+                                EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** paused YouTube...");
                                 Global.botYTPause = true;
                             }
                         }
                         else
                         {
-                            EnqueueMessage(message.Channel.Id, "# ⏸" + Global.discordBotIAName + " is not currently watching YouTube!");
+                            EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** is not currently watching YouTube!");
                         }
                     }
                 }
 
-                if (messageContent.StartsWith("!watch "))
+                if (messageContent.StartsWith("!ytwatch "))
                 {
                     if (Global.allowYTVirtualWatch)
                     {
@@ -217,13 +233,13 @@ namespace ChAIScrapper
                             {
                                 if (!Global.botYTVirtualWatch)
                                 {
-                                    EnqueueMessage(message.Channel.Id, "# ⏯" + Global.discordBotIAName + " starts watching YouTube...");
+                                    EnqueueMessage(message.Channel.Id, "> ⏯ **" + Global.discordBotIAName + "** starts watching YouTube...");
                                     Global.botYTVirtualWatch = true;
                                     virtualWatchEnabled = true;
                                 }
                                 else
                                 {
-                                    EnqueueMessage(message.Channel.Id, "# ⏸" + Global.discordBotIAName + " stopped watching YouTube...");
+                                    EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** stopped watching YouTube...");
                                     Global.botYTVirtualWatch = false;
                                     Global.botYTWatchData = null;
                                 }
@@ -245,8 +261,8 @@ namespace ChAIScrapper
                                             Global.botYTIntro = true;
                                         }
                                         EnqueueMessage(message.Channel.Id, "> Video Selected is **" + Global.botYTWatchData.YTTITLE + "** by **" + Global.botYTWatchData.YTUPLOADER + "**");
-                                        EnqueueMessage(message.Channel.Id, "> To stop the video use !stop.");
-                                        EnqueueMessage(message.Channel.Id, "> Use !pause and !resume to halt the video playback.");
+                                        EnqueueMessage(message.Channel.Id, "> To stop the video use !ytstop.");
+                                        EnqueueMessage(message.Channel.Id, "> Use !ytpause and !resume to halt the video playback.");
                                         if (Global.botAudioMode)
                                         {
                                             EnqueueMessage(message.Channel.Id, "> Warning: Audio voice notes been disabled automatically to improve the AI's answer time while watching videos. You can forcefully enable them again using !audio");
@@ -255,7 +271,7 @@ namespace ChAIScrapper
                                     }
                                     else
                                     {
-                                        EnqueueMessage(message.Channel.Id, "# Error: Video has not enough data!");
+                                        EnqueueMessage(message.Channel.Id, "> Error: Video has not enough data!");
                                         lock (Global.lockInternalData)
                                         {
                                             Global.botYTWatchData = null;
@@ -265,7 +281,7 @@ namespace ChAIScrapper
                                 }
                                 catch
                                 {
-                                    EnqueueMessage(message.Channel.Id, "# Error: Not a valid YT link!");
+                                    EnqueueMessage(message.Channel.Id, "> Error: Not a valid YT link!");
                                     lock (Global.lockInternalData)
                                     {
                                         Global.botYTWatchData = null;
@@ -282,7 +298,7 @@ namespace ChAIScrapper
                     }
                     else
                     {
-                        EnqueueMessage(message.Channel.Id, "# YT Virtual Watch been disabled by the administrator!");
+                        EnqueueMessage(message.Channel.Id, "> **YT Virtual Watch been disabled by the administrator!**");
                         lock (Global.lockInternalData)
                         {
                             Global.botYTWatchData = null;
@@ -302,18 +318,18 @@ namespace ChAIScrapper
                                 if (!Global.botAudioMode)
                                 {
                                     Global.botAudioMode = true;
-                                    EnqueueMessage(message.Channel.Id, "# AI Audio Messages enabled!");
+                                    EnqueueMessage(message.Channel.Id, "> AI Audio Messages enabled!");
                                 }
                                 else
                                 {
                                     Global.botAudioMode = false;
-                                    EnqueueMessage(message.Channel.Id, "# AI Audio Messages disabled!");
+                                    EnqueueMessage(message.Channel.Id, "> AI Audio Messages disabled!");
                                 }
                             }
                             else
                             {
                                 Global.botAudioMode = false;
-                                EnqueueMessage(message.Channel.Id, "# AI Audios been disabled by the administrator!");
+                                EnqueueMessage(message.Channel.Id, "> **AI Audios been disabled by the administrator!**");
                             }
                         }
                         return;
@@ -333,12 +349,12 @@ namespace ChAIScrapper
                         {
                             if (feedbackLevel <= 0)
                             {
-                                EnqueueMessage(message.Channel.Id, "# Feedback must be greater than 0 and equal or smaller to 4!");
+                                EnqueueMessage(message.Channel.Id, "> Feedback must be greater than 0 and equal or smaller to 4!");
                                 return;
                             }
                             if (feedbackLevel > 4)
                             {
-                                EnqueueMessage(message.Channel.Id, "# Feedback must be greater than 0 and equal or smaller to 4!");
+                                EnqueueMessage(message.Channel.Id, "> Feedback must be greater than 0 and equal or smaller to 4!");
                                 feedbackLevel = 4;
                             }
 
@@ -347,7 +363,7 @@ namespace ChAIScrapper
                             {
                                 feedbackString += "⭐";
                             }
-                            EnqueueMessage(message.Channel.Id, "# Feedback sent! " + feedbackString);
+                            EnqueueMessage(message.Channel.Id, "> Feedback sent! " + feedbackString);
                             Global.discordFeedbackLevel = feedbackLevel;
                             return;
                         }
@@ -384,9 +400,11 @@ namespace ChAIScrapper
                         if (elapsedTime.TotalSeconds > 0)
                         {
                             string elapsedTimeString = FormatElapsedTime(elapsedTime);
-                            timeMetadata += @"* [ " + elapsedTimeString + @" AFTER ] * ";
+                            DateTime now = DateTime.Now;
+                            string formattedDateTime = now.ToString("HH ':' mm '24h format hour' dd 'Day' dddd 'Month' MMMM 'Year' yyyy");
+                            timeMetadata += @"( LOCAL TIME IS " + formattedDateTime + @" )";
+                            timeMetadata += @"( " + elapsedTimeString + @" AFTER. TO TAG SOMEONE USE @username )";
                             Global.lastDiscordMessageTime = DateTime.Now;
-                            timeMetadata += @"* [ "" TO TAG SOMEONE USE @username "" ] *";
                         }
                     }
                     if (message.Reference != null)
@@ -476,6 +494,7 @@ namespace ChAIScrapper
             catch (Exception ex)
             {
                 ChAIScrapperProgram.Write($"Discord String Compiler Error: " + ex.ToString());
+                Global.AppendToFile("ErrorLog.txt", ex.ToString());
             }
         }
         public static void EnqueueMessage(ulong channelId, string message)
@@ -547,6 +566,7 @@ namespace ChAIScrapper
                             catch (Exception ex)
                             {
                                 ChAIScrapperProgram.Write("Failed to send file: " + ex.ToString());
+                                Global.AppendToFile("ErrorLog.txt", ex.ToString());
                             }
                         }
                         else
@@ -601,6 +621,7 @@ namespace ChAIScrapper
                     catch (Exception ex)
                     {
                         ChAIScrapperProgram.Write("It was not possible to upload the current AI Image!: " + ex.ToString());
+                        Global.AppendToFile("ErrorLog.txt", ex.ToString());
                     }
 
                     if (Global.discordBotScrapedIAName != Global.discordBotIAName)
@@ -702,6 +723,7 @@ namespace ChAIScrapper
             catch (Exception ex)
             {
                 ChAIScrapperProgram.Write("Error removing Non-BMP Characters: " + ex.Message);
+                Global.AppendToFile("ErrorLog.txt", ex.ToString());
                 return input;
             }
         }

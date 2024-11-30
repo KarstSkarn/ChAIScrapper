@@ -25,9 +25,9 @@ namespace ChAIScrapper
             public string CHAIURL = "https://character.ai/chat/VhfYMgO4Agqz_ZI5tHkQ9DyDFgEoMVK3JkrM-1QDlz8";
             public bool ALLOWAUDIOS = true;
             public bool ALLOWYTVIDEOS = true;
-            public bool HEADLESS = true;
             public int IDLEMIN = 15;
             public int IDLEMAX = 75;
+            public string CHROMIUMPORT = "9222";
         }
         public static async Task Main(string[] args)
         {
@@ -39,9 +39,27 @@ namespace ChAIScrapper
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.Write("ChAIScrapper Discord Bot Service");
-                    Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Write("    ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("2.0 Chromium Version          ");
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine("https://karstskarn.carrd.co");
+                    Console.Write("Made with ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("<3 ");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("by ");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("KarstSkarn          ");
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.Write("12/2024");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    if (File.Exists("ErrorLog.txt"))
+                    {
+                        File.Delete("ErrorLog.txt");
+                    }
 
                     try
                     {
@@ -51,12 +69,13 @@ namespace ChAIScrapper
                             Global.characterAIChatURL = loadedData.CHAIURL;
                             Global.allowBotAudios = loadedData.ALLOWAUDIOS;
                             Global.allowYTVirtualWatch = loadedData.ALLOWYTVIDEOS;
-                            Global.chromeHeadlessMode = false; // loadedData.HEADLESS;
                             Global.discordBotToken = loadedData.DISCORDTOKEN;
                             Global.discordBotUserID = loadedData.DISCORDBOTUID;
                             Global.discordChannelID = loadedData.DISCORDCHANNELID;
                             Global.idleMin = loadedData.IDLEMIN;
                             Global.idleMax = loadedData.IDLEMAX;
+                            Global.chromiumPort = loadedData.CHROMIUMPORT;
+                            Global.chromeDebuggerAddress = "localhost:" + Global.chromiumPort;
                             Global.loadedData = loadedData;
                         }
                         else
@@ -65,18 +84,31 @@ namespace ChAIScrapper
                             newData.CHAIURL = Global.characterAIChatURL;
                             newData.ALLOWAUDIOS = Global.allowBotAudios;
                             newData.ALLOWYTVIDEOS = Global.allowYTVirtualWatch;
-                            newData.HEADLESS = Global.chromeHeadlessMode;
-                            newData.DISCORDTOKEN = "YOUR_DISCORD_TOKEN_HERE";
-                            newData.DISCORDBOTUID = 0;
-                            newData.DISCORDCHANNELID = 0;
+                            newData.DISCORDTOKEN = Global.discordBotToken;
+                            newData.DISCORDBOTUID = Global.discordBotUserID;
+                            newData.DISCORDCHANNELID = Global.discordChannelID;
                             newData.IDLEMIN = 15;
                             newData.IDLEMAX = 75;
+                            newData.CHROMIUMPORT = "9222";
                             SaveObjectToFile<SavedData>(newData, "ChAISData.xml");
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Error while loading ChAISData.xml on init!: " + ex.ToString());
+                        Global.AppendToFile("ErrorLog.txt", ex.ToString());
+                    }
+
+                    if (Global.discordBotToken == "YOUR_DISCORD_BOT_TOKEN_HERE" ||
+                        Global.discordChannelID == 0 ||
+                        Global.discordBotUserID == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("WARNING: You haven't filled the ChAISData.xml data properly! Check it and restart the program!");
+                        while(true)
+                        {
+                            Console.ReadKey();
+                        }
                     }
 
                     var monitoringTask = MonitorTasks(cancellationTokenSource);
@@ -95,6 +127,7 @@ namespace ChAIScrapper
                 catch (Exception ex)
                 {
                     Console.WriteLine("General Error: " + ex.ToString());
+                    Global.AppendToFile("ErrorLog.txt", ex.ToString());
                 }
 
                 ProgramSoftReset(0, ref cancellationTokenSource);
@@ -152,7 +185,6 @@ namespace ChAIScrapper
                     Global.characterAIChatURL = loadedData.CHAIURL;
                     Global.allowBotAudios = loadedData.ALLOWAUDIOS;
                     Global.allowYTVirtualWatch = loadedData.ALLOWYTVIDEOS;
-                    Global.chromeHeadlessMode = false; // loadedData.HEADLESS;
                     Global.discordBotToken = loadedData.DISCORDTOKEN;
                     Global.discordBotUserID = loadedData.DISCORDBOTUID;
                     Global.discordChannelID = loadedData.DISCORDCHANNELID;
@@ -163,6 +195,7 @@ namespace ChAIScrapper
             catch (Exception ex)
             {
                 Write("Error Loading ChAISData.xml while soft reset!: " + ex.ToString());
+                Global.AppendToFile("ErrorLog.txt", ex.ToString());
             }
 
             Global.lastFeasibleAnswer = "";
@@ -197,7 +230,7 @@ namespace ChAIScrapper
             {
                 try
                 {
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     DateTime currentTime = DateTime.Now;
                     string formattedTimeString = $"[ {currentTime:dd/MM/yyyy} - {currentTime:HH:mm:ss} ]";
                     Console.Write(formattedTimeString);
@@ -207,6 +240,7 @@ namespace ChAIScrapper
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error while attempting to use the Write() function: " + ex.ToString());
+                    Global.AppendToFile("ErrorLog.txt", ex.ToString());
                 }
             }
         }
@@ -235,12 +269,13 @@ namespace ChAIScrapper
                     // Save successful, exit the loop
                     return;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(ex.ToString());
                     retries++;
                     int delayMilliseconds = random.Next(minDelayMilliseconds, maxDelayMilliseconds + 1);
                     System.Threading.Thread.Sleep(delayMilliseconds);
+                    Global.AppendToFile("ErrorLog.txt", ex.ToString());
                 }
             }
         }
@@ -266,12 +301,13 @@ namespace ChAIScrapper
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(ex.ToString());
                     retries++;
                     int delayMilliseconds = random.Next(minDelayMilliseconds, maxDelayMilliseconds + 1);
                     System.Threading.Thread.Sleep(delayMilliseconds);
+                    Global.AppendToFile("ErrorLog.txt", ex.ToString());
                 }
             }
             return default(T);
