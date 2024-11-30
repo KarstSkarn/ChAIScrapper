@@ -52,7 +52,7 @@ Now you can invite your newly created Discord bot to the server where you want t
 Also make sure that the bot either through roles or personally has sufficient permissions to read and write messages in channels and see all channels and users of that server (This is managed as if it were a normal user).
 
 ### Configure the file "ChAISData.xml"
-Now the only thing left to do is to open with notepad the ChAISData.xml file.
+Now the only thing left to do is to open with notepad the ChAISData.xml file. When you download the release **this file does not exist yet** to create it just open the .exe and close it afterwards: the file will be created.
 
 Put the Discord bot token in the markdown
 `<DISCORDTOKEN>YOUR_DISCORD_BOT_TOKEN_HERE</DISCORDTOKEN>` section.
@@ -191,6 +191,8 @@ This pauses the current reproduction of the video but doesn't end it so the bot 
 * **!ytresume**
 This resumes the reproduction of any video that has been paused.
 
+------------
+Repository Disclaimer: Due to the size of Chromium's dll files they are not included in the repository. Download a standalone Chromium version and put it into the Chromium folder if you are going to edit the code.
 ------------
 By KarstSkarn 2024
 [![CC Licence](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC Licence")](https://creativecommons.org/licenses/by-nc-sa/4.0/ "CC Licence")
