@@ -1,4 +1,4 @@
-# ChAIScrapper Chromium Version 2.0
+# ChAIScrapper Chromium Version 2.1
 *By KarstSkarn - https://karstskarn.carrd.co*
 
 *If you liked it you can support me on https://ko-fi.com/karstskarn*
@@ -26,7 +26,7 @@ The use of this program and its possible liabilities are the sole responsibility
 # Setup Guide
 The setup of ChAIScrapper requires the user to customize some parameters for its operation. These steps are simple and require no prior knowledge of any kind.
 
-Note: **ChAIScrapper Chromium 2.0 o longer requires Chrome Installed** It uses it's own standalone Chromium executable.
+Note: **ChAIScrapper Chromium 2.0 no longer requires Chrome Installed** It uses it's own standalone Chromium executable.
 
 ### Create a Discord Bot
 Due to its operation ChAIScrapper requires a Discord bot to be created **exclusively** for its operation. This is a simple task that **any Discord user** can perform through the Discord developer portal.
@@ -94,13 +94,13 @@ The program uses web-scrapping techniques to automate and enhance certain functi
 
 * **I must keep the Chromium window active?**
 
-**It is recommended** to keep the bot Chrome Tab opened (Meaning not minimized and obviously not closed at all) despite it can work too with the tab not being visible. The only consideration is that Chromium reduces the resources and refresh rate of the tabs that aren't active and this may result in a noticeable reduction of the bot's answer speed.
+**It is recommended** to keep the bot Chromium Tab opened (Meaning not minimized and obviously not closed at all) despite it can work too with the tab not being visible. The only consideration is that Chromium reduces the resources and refresh rate of the tabs that aren't active and this may result in a noticeable reduction of the bot's answer speed.
 
 A little trick is to keep that Chrome tab into another screen so you can use the rest of the screens freely since in that way Chrome will not reduce the resources that the bot's tab is using.
 
 * **Which Character AI account the bot will use?**
 
-Since it uses your installed version of Chrome it will use any account you have currently logged in in that page. This includes those with ChAI+ (Which may benefit greatly of the enhanced answer speed!).
+Since it uses the standalone Chromium executable it will use any account you have currently logged in in that browser and page. This includes those with ChAI+ (Which may benefit greatly of the enhanced answer speed!).
 
 Take this into consideration before starting the service since it may use a bot where you already have a chat and leak some answers to your Discord Channel.
 
