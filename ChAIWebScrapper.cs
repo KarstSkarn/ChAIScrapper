@@ -196,6 +196,13 @@ namespace ChAIScrapper
                                 {
                                     return;
                                 }
+                                lock (Global.lockInternalData)
+                                {
+                                    while (Global.botDisableFlag)
+                                    {
+                                        Thread.Sleep(1000);
+                                    }
+                                }
                                 Thread.Sleep(50);
                             }
                             catch (Exception ex)

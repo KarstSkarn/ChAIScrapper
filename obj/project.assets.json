@@ -1622,19 +1622,19 @@
   },
   "packageFolders": {
     "C:\\Users\\Falken\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "E:\\VStudio\\Visual Studio Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
+      "projectUniqueName": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
       "projectName": "ChAIScrapper",
-      "projectPath": "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
+      "projectPath": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIScrapper.csproj",
       "packagesPath": "C:\\Users\\Falken\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Falken\\Documents\\ChAIScrapperChromiumGitHub\\ChAIScrapper\\obj\\",
+      "outputPath": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "E:\\VStudio\\Visual Studio Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\Falken\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1658,7 +1658,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "all"
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net6.0": {
@@ -1725,7 +1731,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChAIScrapper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+951af1de8dfca242358631052831fdd8e311c5a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChAIScrapper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChAIScrapper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

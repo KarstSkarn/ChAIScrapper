@@ -115,7 +115,41 @@ namespace ChAIScrapper
                     EnqueueMessage(message.Channel.Id, "> **!refresh** Refreshes Character AI webpage");
                     EnqueueMessage(message.Channel.Id, "> **!fb 1-5** Sets feedback to the last message the AI sent");
                     EnqueueMessage(message.Channel.Id, "> **!character URL** Changes the current chat used by the AI");
+                    EnqueueMessage(message.Channel.Id, "> **!disable** Disables the bot itself");
+                    EnqueueMessage(message.Channel.Id, "> **!enable** Enables the bot itself");
                     return;
+                }
+
+                if (messageContent == "!disable")
+                {
+                    lock (Global.lockInternalData)
+                    {
+                        Global.botDisableFlag = true;
+                        EnqueueMessage(message.Channel.Id, "> **Bot has been disabled!** To enable it type !enable");
+                    }
+                    return;
+                }
+
+                if (messageContent == "!enable")
+                {
+                    lock (Global.lockInternalData)
+                    {
+                        Global.botDisableFlag = false;
+                        EnqueueMessage(message.Channel.Id, "> **Bot has been enabled!**");
+                    }
+                    return;
+                }
+
+                lock (Global.lockInternalData)
+                {
+                    if (Global.botDisableFlag)
+                    {
+                        if (messageContent.StartsWith("!"))
+                        {
+                            EnqueueMessage(message.Channel.Id, "> **Bot is currently disabled!** To enable it type !enable");
+                        }
+                        return;
+                    }
                 }
 
                 if (messageContent == "!refresh")
@@ -248,7 +282,7 @@ namespace ChAIScrapper
                             {
                                 try
                                 {
-                                    string videoUrl = messageContent.Substring("!watch ".Length).Trim();
+                                    string videoUrl = messageContent.Substring("!ytwatch ".Length).Trim();
                                     YTVirtualWatch temporaryYTVirtualWatchData = await ChAIExternal.GetYouTubeSubtitlesAndDetailsAsync(videoUrl);
                                     if (temporaryYTVirtualWatchData.YTCAPTIONS.Count > 0 && temporaryYTVirtualWatchData.LENGTH.TotalSeconds > 0)
                                     {

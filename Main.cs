@@ -41,7 +41,7 @@ namespace ChAIScrapper
                     Console.Write("ChAIScrapper Discord Bot Service");
                     Console.Write("    ");
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Write("2.0 Chromium Version          ");
+                    Console.Write("2.1 Chromium Version          ");
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine("https://karstskarn.carrd.co");
                     Console.Write("Made with ");
@@ -53,6 +53,19 @@ namespace ChAIScrapper
                     Console.Write("KarstSkarn          ");
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     Console.Write("12/2024");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("If you enjoy this program consider ");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("donating ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("@ ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("https://ko-fi.com/karstskarn");
+                    Console.WriteLine("");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("It helps me to keep this one and many other projects working!");
                     Console.WriteLine("");
                     Console.WriteLine("");
 
@@ -105,7 +118,8 @@ namespace ChAIScrapper
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("WARNING: You haven't filled the ChAISData.xml data properly! Check it and restart the program!");
-                        while(true)
+                        Console.WriteLine("If the file was missing it has been now been generated into the ChAIScrapper.exe folder so you can fill it properly.");
+                        while (true)
                         {
                             Console.ReadKey();
                         }
