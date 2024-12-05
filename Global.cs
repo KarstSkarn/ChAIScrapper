@@ -45,8 +45,6 @@ namespace ChAIScrapper
         public static int idleSequenceRepeat = mainRandom.Next(1, 10);
         public static int randomIdleInteraction = mainRandom.Next(15, 75);
 
-        public static bool botDisableFlag = false;
-
         public static int discordFeedbackLevel = 0;
 
         public static bool botWrittingState = false;
