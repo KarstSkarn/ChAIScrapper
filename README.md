@@ -121,6 +121,8 @@ The way the bot works is that gives absolute priority to DMs. When its answering
 
 The only time the bot won't be able to answer DMs is when is watching YouTube videos.
 
+**NOTE: Due to Discord's policies the bot won't answer your DMs until you have written on the same text channel the bot is currently active on. This is to avoid the creation of bots that massively spam users. Once you have texted the bot once on the text channel it will answer your DMs.**
+
 ### Hint
 It works better with "Meow" AI model since it gives faster and shorter answers thus making it more realistic.
 
