@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\global.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|solutionrelative:global.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\chaidiscordbot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|solutionrelative:chaidiscordbot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\global.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|solutionrelative:global.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\chaiwebscrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|solutionrelative:chaiwebscrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\chaidiscordbot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|solutionrelative:chaidiscordbot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E9303324-009B-409E-A99E-27BF41A579EC}|ChAIScrapper.csproj|e:\\chaiscrappergithub\\chaiscrapper\\chaiexternal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,17 +30,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Global.cs",
               "DocumentMoniker": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\Global.cs",
               "RelativeDocumentMoniker": "Global.cs",
               "ToolTip": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\Global.cs",
               "RelativeToolTip": "Global.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAQwC0AAABKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T03:25:27.545Z",
               "EditorCaption": ""
@@ -53,27 +53,27 @@
               "RelativeDocumentMoniker": "ChAIWebScrapper.cs",
               "ToolTip": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIWebScrapper.cs",
               "RelativeToolTip": "ChAIWebScrapper.cs",
-              "ViewState": "AgIAAK8AAAAAAAAAAAASwMUAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAOoAAAAAAAAAAAAhwMUAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T03:25:27.761Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Main.cs",
               "DocumentMoniker": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\Main.cs",
               "RelativeDocumentMoniker": "Main.cs",
               "ToolTip": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\Main.cs",
               "RelativeToolTip": "Main.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAYwHgAAACiAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAA1wEcBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T03:25:27.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ChAIDiscordBot.cs",
               "DocumentMoniker": "E:\\ChAIScrapperGitHub\\ChAIScrapper\\ChAIDiscordBot.cs",
               "RelativeDocumentMoniker": "ChAIDiscordBot.cs",
@@ -81,8 +81,7 @@
               "RelativeToolTip": "ChAIDiscordBot.cs",
               "ViewState": "AgIAAGgAAAAAAAAAAAASwHYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T03:25:27.765Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T03:25:27.765Z"
             },
             {
               "$type": "Document",
@@ -94,8 +93,7 @@
               "RelativeToolTip": "ChAIExternal.cs",
               "ViewState": "AQIAADkAAAAAAAAAAAASwE0AAABqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T03:25:27.766Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T03:25:27.766Z"
             },
             {
               "$type": "Bookmark",

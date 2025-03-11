@@ -1,4 +1,4 @@
-# ChAIScrapper Chromium Version 2.1
+# ChAIScrapper Chromium Version 3.0
 *By KarstSkarn - https://karstskarn.carrd.co*
 
 *If you liked it you can support me on https://ko-fi.com/karstskarn*
@@ -23,10 +23,21 @@ The use of this program and its possible liabilities are the sole responsibility
 - [Common FAQ](#file-security-check)
 - [Bot Commands](#bot-commands)
 
+### 3.0 New features
+* Supporters are now displayed when the executable inits!
+* It checks with my server if there's any update and tells the user (But will still let you use obsolete versions)
+* Now it supports Direct Messaging!
+* It now keeps the original CharacterAI text format emphasis (Italic, bold...)
+* Major optimizations and bugfixes
+* Possibility to have a list of ignored users (Useful for trolling or to make two bots to stay together in the same channel without causing an endless loop of answers)
+* Added administrative lock which prevents non administrative users changing the character or restarting remotely the program.
+* Added an administrative users list which are authorized to bypass the administrative lock.
+* Improved the voice notes system.
+
 # Setup Guide
 The setup of ChAIScrapper requires the user to customize some parameters for its operation. These steps are simple and require no prior knowledge of any kind.
 
-Note: **ChAIScrapper Chromium 2.0 no longer requires Chrome Installed** It uses it's own standalone Chromium executable.
+Note: **ChAIScrapper Chromium 3.0 no longer requires Chrome Installed** It uses it's own standalone Chromium executable.
 
 ### Create a Discord Bot
 Due to its operation ChAIScrapper requires a Discord bot to be created **exclusively** for its operation. This is a simple task that **any Discord user** can perform through the Discord developer portal.
@@ -61,9 +72,6 @@ Then in your Discord right click on the text channel you want the bot to read an
 Paste the Discord Channel ID in the “Copy Channel ID” section.
 `<DISCORDCHANNELID>0</DISCORDCHANNELID>`
 
-Finally right click on the bot in the list of users on the right and copy its user ID. Note that it has to be a number and not the username or nickname. Once you have done this paste the Discord bot's User ID into the
-`<DISCORDBOTUID>0</DISCORDBOTUID>`
-
 Finally close that file saving changes!
 
 Note: **You maybe need to enable Discord Developer Features in your Discord Options menu to be able to copy the channel or user ID**
@@ -85,6 +93,36 @@ To start the bot, follow a simple procedure.
 
 ## Hosting multiple bots in the same computer
 The Chromium version of ChAIScrapper allows the user to host multiple bots in the same computer since each one depends uniquely of a standalone Chromium executable. In order to do this you just need to copy the entire ChAIScrapper folder somewhere else and edit the "ChAIScrapperChromiumLauncher.bat" file. Assign any other port (By default is 9992; you can choose any other port that is not currently in use) and change that port number also in the ChAISData.xml file editing it with Notepad. Then when you launch and execute this copied ChAIScrapper folder it will behave as if the other one doesn't exist allowing multiple bots to be hosted in the same computer. Each one using a different port and folder copy.
+
+## Adding administrative privileges
+In order to add administrative privileges you just need to open the ChAISCustomization.xml file. There you may add in the list (Which has a bunch of entries with just zeroes to serve as a stencil) the Discord UserIDs that you want to have administrative privileges (Yours included preferibly).
+
+Once you have administrative privileges you can add or remove users by just using "!admin UID".
+
+## Adding users to the ignore list
+By default the bot ignores itself and that behaviour can't be changed (For obvious reasons; otherwise it would start and endless loop with itself).
+
+You can add or remove users to the ignore list by editing ChAISCustomization.xml list and restarting the program or by using the command "!ignore UID".
+The messages sent by the users or bots which have those IDs won't be processed at all (Including DMs!).
+
+## Changing how the Bot changes its name and profile picture
+You can disable the automatic profile picture / nickname change by editing the file ChAISCustomization.xml file.
+
+Alternatively you can also change how the bot changes its name by editing the "stencil" stated in that file. Take in mind that will replace the word "USERNAME" by the
+bot actual name.
+
+## Editing the initial bot briefing
+By default the bot has a briefing which will use in order to add some context to the situation. The prompting of this briefing **is asked to the user every time** the program initializes.
+
+This allows bypassing this if the chat was already used for Discord's purpose. You can edit this briefing by editing on any text editor the file "InitialBotBriefing.txt" which is automatically generated the first time the ".exe" file is executed.
+
+## DMs mechanics
+The way the bot works is that gives absolute priority to DMs. When its answering to DMs it won't answer on the main text channel so it's not possible to have 100% the bot answering on both sides at the same time (We, the humans can't do it anyway).
+
+The only time the bot won't be able to answer DMs is when is watching YouTube videos.
+
+### Hint
+It works better with "Meow" AI model since it gives faster and shorter answers thus making it more realistic.
 
 ## Common FAQ
 
@@ -158,24 +196,24 @@ This command displays the command list.
 * **!ping**
 This command results in the Discord Bot service answering "Pong!" just for debugging and online testing purposes.
 
-* **!refresh**
+* **!refresh** *Administrative Lock*
 This command forces the webpage to refresh (Very useful when Character AI gets stuck while generating an answer!).
 
-* **!character [URL]**
+* **!character [URL]** *Administrative Lock*
 This command allows you to change the ChAIScrapper current character. Once its accepted it will take approximately one minute to completely restart working with that character without any need from the host to do anything.
 Example: *!character https://character.ai/chat/xuHtpVIs5Pl6XGvIjOKx-8jsIOCm5xi_iG4H19gxOxA*
 
-* **!reset**
+* **!reset** *Administrative Lock*
 For if some reason the bot seems to malfunction you can reset most of the ChAIScrapper service from the Discord text channel itself using this command.
 
 Note: **Both the !reset and the !character commands have a 5 minute cooldown. Since the bot scraps also the Character AI character profile image and uses it as its own this makes Discord prone to rejecting connection if this were to happen too often!**
 
-* **!fb / !feedback [1-4]**
+* **!fb / !feedback [1-4]** *Administrative Lock*
 This allows the Discord channel users to give feedback to the bot as its naturally done from the Character AI's webpage. This is very helpful to train it into more accurate answers.
 Example: *!fb 4*
 This will set a 4 star rating into the bot last answer.
 
-* **!audio**
+* **!audio** *Administrative Lock*
 This enables/disables the voice notes system.
 
 * **!ytwatch [URL]**
@@ -191,11 +229,23 @@ This pauses the current reproduction of the video but doesn't end it so the bot 
 * **!ytresume**
 This resumes the reproduction of any video that has been paused.
 
+* **!lock**
+Enables or disables the lock of the commands which have "Administrative Lock" stated with them. If enabled only administrative users will be able to use them.
+
+* **!dm**
+Enables or disables the Direct Messages features. This can only be changed by users with administrative privileges.
+
+* **!admin USERID**
+Adds or removes an user to the administrative privileges list. In order for it to work you must add the Discord UserID (Which is a long number you can get by right clicking on any user and choosing "Copy user ID").
+
+* **!ignore USERID**
+Adds or removes an user to the ignore list. It requires administrative privileges in order to be executed and works in the same way than the !admin command.
+
 ------------
 
 ## Repository Disclaimer
 Due to the size of Chromium's dll files they are not included in the repository. Download a standalone Chromium version and put it into the Chromium folder if you are going to edit the code.
 
 ------------
-By KarstSkarn 2024
+By KarstSkarn 2025
 [![CC Licence](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC Licence")](https://creativecommons.org/licenses/by-nc-sa/4.0/ "CC Licence")
