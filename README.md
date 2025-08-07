@@ -1,4 +1,4 @@
-# ChAIScrapper Chromium Version 3.0
+# ChAIScrapper Chromium Version 4.0
 *By KarstSkarn - https://karstskarn.carrd.co*
 
 *If you liked it you can support me on https://ko-fi.com/karstskarn*
@@ -9,13 +9,13 @@
 Demo/Assistance Discord: https://discord.com/invite/d9rNwkerZw
 
 ### Disclaimer
-This program has been created for experimental and demonstrative purposes of the functionalities that the application of AI's such as CharacterAI's could have in an environment such as Discord.
+This program has been created for experimental and demonstrative purposes regarding the functionalities that AI applications, such as CharacterAI, could have in an environment like Discord.
 
-Under no circumstances I am related or responsible for the misuse of this program or the consequences that could be derived from it.
+Under no circumstances am I related to or responsible for the misuse of this program or any consequences that may arise from it.
 
-The program respects and does not interfere in any way with the “NSFW” content filters that Character AI has in place.
+The program respects and does not interfere in any way with the NSFW content filters that CharacterAI has in place.
 
-The use of this program and its possible liabilities are the sole responsibility of the user.
+The use of this program and any potential liabilities are the sole responsibility of the user.
 
 ### Readme Index
 - [Setup Guide](#setup-guide)
@@ -23,226 +23,231 @@ The use of this program and its possible liabilities are the sole responsibility
 - [Common FAQ](#file-security-check)
 - [Bot Commands](#bot-commands)
 
-### 3.0 New features
-* Supporters are now displayed when the executable inits!
-* It checks with my server if there's any update and tells the user (But will still let you use obsolete versions)
-* Now it supports Direct Messaging!
-* It now keeps the original CharacterAI text format emphasis (Italic, bold...)
-* Major optimizations and bugfixes
-* Possibility to have a list of ignored users (Useful for trolling or to make two bots to stay together in the same channel without causing an endless loop of answers)
-* Added administrative lock which prevents non administrative users changing the character or restarting remotely the program.
-* Added an administrative users list which are authorized to bypass the administrative lock.
-* Improved the voice notes system.
+### 4.0 Features
+* An easy-to-setup and brand-new GUI!  
+* Possibility to talk to the bots using DMs.  
+* YouTube Virtual Videos AI Watch fully functional.  
+* It now keeps the original CharacterAI text format emphasis (italic, bold...)  
+* Possibility to have a list of ignored users (useful for trolling or to make two bots stay together in the same channel without causing an endless loop of replies)  
+* Made easy to host multiple bots on the same computer!  
+* Bots now detect if they are on the wrong Discord servers and automatically leave them!  
+* Major optimizations and bug fixes.  
 
 # Setup Guide
-The setup of ChAIScrapper requires the user to customize some parameters for its operation. These steps are simple and require no prior knowledge of any kind.
+The setup of ChAIScrapper requires the creation of a Discord bot, which is the one that will be used by your executable.  
+The customization of parameters has been made super easy in version 4.0, so it's intuitive and allows you to save and switch between different configurations or bots.  
+Note: **ChAIScrapper Chromium 4.0 no longer requires Chrome installed** — it uses its own standalone Chromium executable.
 
-Note: **ChAIScrapper Chromium 3.0 no longer requires Chrome Installed** It uses it's own standalone Chromium executable.
+### Create a Discord Bot  
+Due to its operation, ChAIScrapper requires a Discord bot to be created **exclusively** for its use. This is a simple task that **any Discord user** can perform through the Discord Developer Portal.  
 
-### Create a Discord Bot
-Due to its operation ChAIScrapper requires a Discord bot to be created **exclusively** for its operation. This is a simple task that **any Discord user** can perform through the Discord developer portal.
+https://discord.com/developers/applications  
 
-https://discord.com/developers/applications
+You don't need to think too much about what profile image or username to give the bot, because ChAIScrapper automatically changes the bot's nickname on the server and its profile image depending on the Character AI character that is running.  
 
-You don't need to think too much about what profile image and username to give to the bot because ChAIScrapper automatically changes the bot's nickname on the server and its profile image depending on the Character AI character that is running.
+Once you've created your Discord bot, get the Application/Bot Token and store it for later use in a safe file.  
 
-Once you created your Discord bot get the Application/Bot Token and store it for later usage in a safe file.
+Note: **Never share your Discord Bot token with anyone**  
 
-Note: **Never share your Discord Bot token with anyone**
+### Add permissions to the Discord Bot  
+In the Discord Developer Portal, under the "Installation" category and the "Guild Install" tab, click and choose "Bot". Then add the following permissions:  
+`Manage Messages, Read Message History, Send Messages, Attach Files, View Channels`  
 
-### Add permissions to the Discord Bot
-In the Discord Developers Portal under the category "Installation" and the tab "Guild Install" click and choose "Bot". Then add the following permissions:
-`Manage Messages, Read Message History, Send Messages, Attach Files, View Channels`.
+Finally, go to the "Bot" tab in the Discord Developer Portal and scroll all the way down. Under the "Privileged Gateway Intents" category, enable the following intent options:  
+`PRESENCE INTENT - SERVER MEMBERS INTENT - MESSAGE CONTENT INTENT`  
 
-Finally go to the Discord Developers Portal tab "Bot" and scroll all the way down. Enable under the "Privileged Gateway Intents" category the following intent options:
-`PRESENCE INTENT - SERVER MEMBERS INTENT - MESSAGE CONTENT INTENT` 
+### Invite the Bot to your Discord  
+Now you can invite your newly created Discord bot to the server where you want to use it. Due to how ChAIScrapper works, the bot cannot run on more than one server at a time, so make sure it is the Discord server where you really want to have it.  
 
-### Invite the Bot to your Discord
-Now you can invite your newly created Discord bot to the server where you want to use it. Due to how ChAIScrapper works the bot cannot run on more than one server at a time so make sure it is the Discord server where you really want to have it.
+Also, make sure that the bot, either through roles or direct assignment, has sufficient permissions to read and write messages in channels and to see all channels and users of that server (this is managed as if it were a normal user).
 
-Also make sure that the bot either through roles or personally has sufficient permissions to read and write messages in channels and see all channels and users of that server (This is managed as if it were a normal user).
+### Configure the program
+In this version, this step is made super easy!
 
-### Configure the file "ChAISData.xml"
-Now the only thing left to do is to open with notepad the ChAISData.xml file. When you download the release **this file does not exist yet** to create it just open the .exe and close it afterwards: the file will be created.
+Open the program `ChAIScrapperV4.0.exe`. Go to the 'Config' tab.  
+There you have all the options and customizations.
 
-Put the Discord bot token in the markdown
-`<DISCORDTOKEN>YOUR_DISCORD_BOT_TOKEN_HERE</DISCORDTOKEN>` section.
-
-Then in your Discord right click on the text channel you want the bot to read and write on. In the drop-down menu select the “Copy Channel ID” option.
-Paste the Discord Channel ID in the “Copy Channel ID” section.
-`<DISCORDCHANNELID>0</DISCORDCHANNELID>`
-
-Finally close that file saving changes!
-
-Note: **You maybe need to enable Discord Developer Features in your Discord Options menu to be able to copy the channel or user ID**
-
-Note #2: **For if some reason you somehow messed badly with that file and causes crashes or any sort of error you can just delete it and open ChAIScrapper.exe and will automatically create a new blank file for you to fill.**
+1. First, copy and paste your Discord bot token into the **Discord Bot Token** textbox.  
+2. By right-clicking on the Discord text channel, get the **Channel ID** and paste it into the **Channel ID** textbox.  
+   (You may have to enable **Developer Mode** in your Discord settings for this option to appear!)  
+3. By right-clicking on the Discord server name, copy the **Discord Server ID**  
+   (This helps prevent others from accidentally or intentionally adding your bot to their servers and causing a mess...)  
+   and paste it into the **Discord Server ID** textbox.  
+4. Paste your desired **CharacterAI Chat URL** into the **ChAI URL** textbox.  
+   (This is the URL of the chat you want to use.)  
+5. Save your configuration!  
+   This way, every time the program starts, it will automatically load the last configuration used,  
+   so you won’t have to repeat these steps anymore!  
+   Also, you’ll be able to switch between configurations or bots really quickly!
 
 ## Starting the Service
+1. Go to the 'Control' tab and always click **"Launch Chromium"** first.  
+   Wait until Chromium has launched, and log in to your CharacterAI / Google account if you want to use a specific account.  
+   (Especially useful if you have **ChAI+**!)  
+2. Click **"Run"** and wait a few seconds until everything sets up automatically!  
+3. Enjoy!
 
-To start the bot, follow a simple procedure.
-
-* Execute the file **ChAIScrapperChromiumLauncher.bat** not the .exe directly! This Will launch Chromium. **You always need to launch Chromium before launching the actual executable.**
-* If it's the first time launching this service go manually to the Character AI Webpage and login yourself with the account you wish to be used. Note that the account data Will be stored in the Chromium/UsersData.
-* If needed (To avoid pop-ups) log-in with your Google Account in the Chromium window itself.
-* Please always keep the Chromium window in a square shape and never fully maximize it: Character AI webpage changes its structure depending of the window size.
-* Launch ChAIScrapper.exe.
-* It Will redirect the Chromium window to the Character AI Chat URL stated in the file ChAISData.xml.
-* It will take a few seconds to start the service in Discord and wait until the URL has stabilized enough to capture and send answers.
-* Once the bot has responded to the “initial briefing” that the service makes it is ready to be used!
 
 ## Hosting multiple bots in the same computer
-The Chromium version of ChAIScrapper allows the user to host multiple bots in the same computer since each one depends uniquely of a standalone Chromium executable. In order to do this you just need to copy the entire ChAIScrapper folder somewhere else and edit the "ChAIScrapperChromiumLauncher.bat" file. Assign any other port (By default is 9992; you can choose any other port that is not currently in use) and change that port number also in the ChAISData.xml file editing it with Notepad. Then when you launch and execute this copied ChAIScrapper folder it will behave as if the other one doesn't exist allowing multiple bots to be hosted in the same computer. Each one using a different port and folder copy.
+This version is specially designed to make it easy to host multiple bots on the same computer.  
+Just take note that each bot will require a different token, so you will have to create multiple Discord bots for that.
 
-## Adding administrative privileges
-In order to add administrative privileges you just need to open the ChAISCustomization.xml file. There you may add in the list (Which has a bunch of entries with just zeroes to serve as a stencil) the Discord UserIDs that you want to have administrative privileges (Yours included preferibly).
+In order to host multiple bots, just copy the entire ChAIScrapper folder (including Chromium and all its contents).  
+Open the executable and change the URL, Channel ID (all the stuff you want to be different) to your desired values and,  
+more importantly, set a different Chromium port in the config tab. By default, Chromium uses **9222**, as stated in the  
+executable. By switching to **9223**, **9224**... and so on, it lets you host multiple bot instances.
 
-Once you have administrative privileges you can add or remove users by just using "!admin UID".
+Then launch each bot as normal (each one will have its own Chromium window) and keep the executables open!
 
-## Adding users to the ignore list
-By default the bot ignores itself and that behaviour can't be changed (For obvious reasons; otherwise it would start and endless loop with itself).
+## Adding Administrative Privileges  
+To add users with administrative privileges, simply copy their Discord ID (not their name or the "@", just the long numerical ID) by right-clicking on their profile.  
+Then, add that ID in the **Privileges** tab of the executable.
 
-You can add or remove users to the ignore list by editing ChAISCustomization.xml list and restarting the program or by using the command "!ignore UID".
-The messages sent by the users or bots which have those IDs won't be processed at all (Including DMs!).
+This list is saved automatically whenever you save your configuration!
 
-## Changing how the Bot changes its name and profile picture
-You can disable the automatic profile picture / nickname change by editing the file ChAISCustomization.xml file.
+## Adding Users to the Ignore List  
+By default, the bot ignores itself and this behavior cannot be changed (for obvious reasons—otherwise it would create an endless loop).
 
-Alternatively you can also change how the bot changes its name by editing the "stencil" stated in that file. Take in mind that will replace the word "USERNAME" by the
-bot actual name.
+You can add other users or bots for the bot to ignore by adding their Discord IDs to the **Ignore List** within the **Privileges** tab.
 
-## Editing the initial bot briefing
-By default the bot has a briefing which will use in order to add some context to the situation. The prompting of this briefing **is asked to the user every time** the program initializes.
+This list is also saved automatically when you save your configuration!
 
-This allows bypassing this if the chat was already used for Discord's purpose. You can edit this briefing by editing on any text editor the file "InitialBotBriefing.txt" which is automatically generated the first time the ".exe" file is executed.
+## Changing How the Bot Changes Its Name and Profile Picture  
+You can disable the automatic name and/or profile picture changes in the **Config** tab of the executable.  
+This setting only applies when the bot starts, so you may need to stop and restart the bot for it to take effect!
 
-## DMs mechanics
-The way the bot works is that gives absolute priority to DMs. When its answering to DMs it won't answer on the main text channel so it's not possible to have 100% the bot answering on both sides at the same time (We, the humans can't do it anyway).
+## Editing the Initial Bot Briefing  
+You can edit the initial bot briefing in the executable’s **Config** tab.  
+This briefing is the message sent to the bot at startup if desired.  
+It helps set up the environment and context for the bot’s interactions.  
 
-The only time the bot won't be able to answer DMs is when is watching YouTube videos.
+This is also saved in your configuration for your convenience!
 
-**NOTE: Due to Discord's policies the bot won't answer your DMs until you have written on the same text channel the bot is currently active on. This is to avoid the creation of bots that massively spam users. Once you have texted the bot once on the text channel it will answer your DMs.**
+## DMs Mechanics  
+The bot gives absolute priority to DMs. When it is answering DMs, it won’t respond in the main text channel, so it’s not possible for the bot to answer 100% on both sides at the same time  
+(We humans can’t do that either, anyway).
 
-### Hint
-It works better with "Meow" AI model since it gives faster and shorter answers thus making it more realistic.
+The only time the bot won’t be able to answer DMs is when it is watching YouTube videos.
+
+**NOTE: Due to Discord’s policies, the bot won’t respond to your DMs until you’ve sent a message in the same text channel where the bot is currently active.**  
+This is to prevent bots from massively spamming users.  
+Once you have messaged the bot once in the text channel, it will answer your DMs.
+
+### Hint  
+It works better with the "Meow" AI model since it gives faster and shorter answers, making the conversation feel more realistic.
 
 ## Common FAQ
 
-* **Why I need to keep Chromium open while the bot is running?**
+* **Why do I need to keep Chromium open while the bot is running?**
 
-The program uses web-scrapping techniques to automate and enhance certain functions of the Character AI page. For this you need to open Chromium in a special debug mode in which you can run the program.
+The program uses web-scraping techniques to automate and enhance certain functions of the Character AI page. For this, you need to open Chromium in a special debug mode that allows the program to run.
 
-* **I must keep the Chromium window active?**
+* **Do I have to keep the Chromium window active?**
 
-**It is recommended** to keep the bot Chromium Tab opened (Meaning not minimized and obviously not closed at all) despite it can work too with the tab not being visible. The only consideration is that Chromium reduces the resources and refresh rate of the tabs that aren't active and this may result in a noticeable reduction of the bot's answer speed.
+Not anymore! You can minimize it or move it to another screen / hide it somewhere on your desktop.  
+The only important thing is **not to close it**.  
 
-A little trick is to keep that Chrome tab into another screen so you can use the rest of the screens freely since in that way Chrome will not reduce the resources that the bot's tab is using.
+Version 4.0 launches Chromium in a special way that disables the automatic resource starvation it used to suffer when minimized, which previously caused shortened answers and other malfunctions!
 
-* **Which Character AI account the bot will use?**
+* **Which Character AI account will the bot use?**
 
-Since it uses the standalone Chromium executable it will use any account you have currently logged in in that browser and page. This includes those with ChAI+ (Which may benefit greatly of the enhanced answer speed!).
+Since it uses the standalone Chromium executable, it will use whichever account you are currently logged into in that browser and page.  
+This includes accounts with ChAI+ (which may greatly benefit from the enhanced answer speed!).
 
-Take this into consideration before starting the service since it may use a bot where you already have a chat and leak some answers to your Discord Channel.
+Take this into consideration before starting the service, since it may use a bot where you already have a chat and could leak some answers to your Discord channel.
 
 * **How many people can speak to the bot at once?**
 
-It has virtually no limitation other than the amount of data that the Character AI bot system itself can handle in a single message.
+It has virtually no limitations other than the amount of data that the Character AI bot system itself can handle in a single message.
 
-* **The bot recognizes different users while using ChAIScrapper?**
+* **Does the bot recognize different users while using ChAIScrapper?**
 
-Yes, the bot receives specially designed prompts that make it very easy for it to recognize different Discord users and differentiate the different things that different users may send to the bot.
+Yes, the bot receives specially designed prompts that make it very easy for it to recognize different Discord users and differentiate the various things they send to the bot.
 
-* **I must do a special Character AI character for it?**
+* **Do I need to create a special Character AI character for it?**
 
-Strictly no; a lot of vanilla characters (Such as Ame by @renai) will easily follow the Discord flow and be able to even natively tag users or ping @everyone. 
+Strictly no; many vanilla characters (such as Ame by @renai) will easily follow the Discord flow and can even natively tag users or ping @everyone.
 
-Despite that it is heavily recommended to once you decided you enjoy this program to create your own Character AI character and in a detailed manner expose how you want it to behave in your Discord channel (Things such pings, tags, style of answers...)
+That said, it is highly recommended that once you decide you enjoy this program, you create your own Character AI character and detail how you want it to behave in your Discord channel (things like pings, tags, style of answers, etc.).
 
-* **How does the voice notes feature works?**
+* **How does the voice notes feature work?**
 
-The voice notes just trick the CharacterAI page to play just once the last answer the bot gave you and automatically record and trim it in order to send it using Discord. Keep in mind that this means that unless you do some Virtual Cables customized setup on your computer it will automatically play the voice note in your computer's default output device.
+The voice notes trick the CharacterAI page into playing just once the last answer the bot gave you, and automatically record and trim it to send via Discord.  
+Keep in mind that unless you set up custom Virtual Cables on your computer, the voice note will play through your computer's default output device.
 
-If you are playing other sounds through that device they will be recorded too and may interfer onto the voice note. By default ChAIScrapper captures the audio from the default output device but this is a feature you can change relatively easily in the program's code.
+If you’re playing other sounds through that device, they will be recorded too and may interfere with the voice note.  
+By default, ChAIScrapper captures audio from the default output device, but this is a feature you can change relatively easily in the program’s code.
 
-* **How does the YT Virtual Watch feature works?**
+* **How does the YouTube Virtual Watch feature work?**
 
-This feature "allows" the bot to "watch and enjoy" YouTube videos. In this version the program ChAIScrapper attempts to fetch and scrap the YouTube URL (Without needing Chrome for this) and fetches its subtitles and all available metadata such as YouTube user name, Video description...
+This feature "allows" the bot to "watch and enjoy" YouTube videos. In this version, ChAIScrapper attempts to fetch and scrape the YouTube URL (without needing Chrome for this) and retrieves its subtitles and all available metadata such as YouTube username, video description, etc.
 
-Then a sequence of "watching" the video begins while you all can still speak to the bot and it will answer to you all separately as normal. The bot breaks the video in 15 seconds segments and uses the subtitles of those 15 seconds as a very detailed and structurated prompt in order for it to be able to keep track of the video its currently watching.
+Then a sequence of "watching" the video begins while you can still speak to the bot, and it will answer each of you separately as normal.  
+The bot breaks the video into 15-second segments and uses the subtitles of those segments as a very detailed and structured prompt to keep track of the video it’s currently watching.
 
-In the private experimental version I even implemented some code that grabs some frames of the video every 15 seconds and sends them using an API to a Image Recognition service and returns the detailed description of those frames to complement the video subtitles. In this way the bot reacts very realistically to the submitted video but sadly those Image Detection servicions have limited requests and require me to share my private API Tokens. But I leave here the concept just in case any of you want to implement it yourselves.
+In a private experimental version, I even implemented code that grabs some frames of the video every 15 seconds and sends them via an API to an image recognition service, which returns detailed descriptions of those frames to complement the subtitles.  
+This way, the bot reacts very realistically to the submitted video. Sadly, these image detection services have limited requests and require me to share my private API tokens.  
+But I leave the concept here in case any of you want to implement it yourselves.
 
-Note: **Very very long videos can disorient your bot.** For example hours long movies or videos with abstract subtitles or audio can just disorient your bot.
+Note: **Very, very long videos can disorient your bot.** For example, hours-long movies or videos with abstract subtitles or audio may confuse your bot.
 
-Note #2: **If the video has not subtitles or enough metadata the bot will refuse to "see" it**.
+Note #2: **If the video has no subtitles or enough metadata, the bot will refuse to "watch" it.**
 
-* **How the automatic idle function works?**
+* **How does the automatic idle function work?**
 
-The program ChAIScrapper has a function that enables the bot to detect when the Discord text channel goes silent and automatically feed itself and voluntarily write.
+ChAIScrapper has a function that enables the bot to detect when the Discord text channel goes silent and automatically feed itself by voluntarily writing.
 
-This may result in a very wide range of messages from the bot. We even experienced "needy bots" that started pinging @everyone and plainly asking for attention because they got bored. 
+This can result in a wide range of messages from the bot. We even experienced "needy bots" that started pinging @everyone and plainly asking for attention because they got bored.
 
-The idle interactions are random but have a timing range which you can change in the file ChAISData.xml. By default the minimum time between idle interactions will be 15 minutes and the maximum will be 75 minutes. 
+Idle interactions are random but have a timing range that you can change in the `ChAISData.xml` file.  
+By default, the minimum time between idle interactions is 15 minutes, and the maximum is 75 minutes.
 
-Note: **If you set both numbers to 0 in the file ChAISData.xml this function will be entirely disabled and the bot won't be able to automatically write when its idle.**
+Note: **If you set both numbers to 0 in the executable’s Config tab, this function will be entirely disabled and the bot won’t be able to automatically write when it’s idle.**
 
-## Bot Commands
-All bot commands start by the **"!"** character. The only exception is starting a Discord message with **"//"** which results in the bot ignoring that message.
+## Bot Commands  
+All bot commands start with the **"!"** character.
 
-Example:
-*// The bot can't read this and won't react to it at all* 
+* **!help**  
+  Displays the list of commands.
 
-* **!help**
-This command displays the command list.
+* **!ping**  
+  The bot responds with "Pong!" for debugging and online testing purposes.
 
-* **!ping**
-This command results in the Discord Bot service answering "Pong!" just for debugging and online testing purposes.
+* **!refresh** *Administrative Lock*  
+  Forces the webpage to refresh (very useful when Character AI gets stuck while generating an answer!).
 
-* **!refresh** *Administrative Lock*
-This command forces the webpage to refresh (Very useful when Character AI gets stuck while generating an answer!).
+* **!reset** *Administrative Lock*  
+  Resets most of the ChAIScrapper service from the Discord text channel if the bot malfunctions.
 
-* **!character [URL]** *Administrative Lock*
-This command allows you to change the ChAIScrapper current character. Once its accepted it will take approximately one minute to completely restart working with that character without any need from the host to do anything.
-Example: *!character https://character.ai/chat/xuHtpVIs5Pl6XGvIjOKx-8jsIOCm5xi_iG4H19gxOxA*
+  **Note:** The !reset command has a 5-minute cooldown. Since the bot also scraps the Character AI character profile image and uses it as its own, Discord may reject connections if this happens too often!
 
-* **!reset** *Administrative Lock*
-For if some reason the bot seems to malfunction you can reset most of the ChAIScrapper service from the Discord text channel itself using this command.
+* **!audio** *Administrative Lock*  
+  Enables or disables the voice notes system.
 
-Note: **Both the !reset and the !character commands have a 5 minute cooldown. Since the bot scraps also the Character AI character profile image and uses it as its own this makes Discord prone to rejecting connection if this were to happen too often!**
+* **!ytwatch [URL]**  
+  Starts the bot watching any YouTube video.  
+  Example: `!watch https://www.youtube.com/watch?v=dQw4w9WgXcQ`
 
-* **!fb / !feedback [1-4]** *Administrative Lock*
-This allows the Discord channel users to give feedback to the bot as its naturally done from the Character AI's webpage. This is very helpful to train it into more accurate answers.
-Example: *!fb 4*
-This will set a 4 star rating into the bot last answer.
+* **!ytstop**  
+  Completely stops and ends the playback of any YouTube video the bot is watching.
 
-* **!audio** *Administrative Lock*
-This enables/disables the voice notes system.
+* **!ytpause**  
+  Pauses the current video playback without ending it, so the bot can resume later.
 
-* **!ytwatch [URL]**
-This makes the bot start watching any YouTube video.
-Example: *!watch https://www.youtube.com/watch?v=dQw4w9WgXcQ*
+* **!ytresume**  
+  Resumes playback of any paused video.
 
-* **!ytstop**
-This completely stops and ends the reproduction of any YouTube video the bot is currently watching.
+* **!lock**  
+  Enables or disables the lock on commands marked with *Administrative Lock*.  
+  When enabled, only administrative users can use those commands.
 
-* **!ytpause**
-This pauses the current reproduction of the video but doesn't end it so the bot can resume it later.
+* **!dm**  
+  Enables or disables the Direct Messages feature.  
+  This can only be changed by users with administrative privileges.
 
-* **!ytresume**
-This resumes the reproduction of any video that has been paused.
-
-* **!lock**
-Enables or disables the lock of the commands which have "Administrative Lock" stated with them. If enabled only administrative users will be able to use them.
-
-* **!dm**
-Enables or disables the Direct Messages features. This can only be changed by users with administrative privileges.
-
-* **!admin USERID**
-Adds or removes an user to the administrative privileges list. In order for it to work you must add the Discord UserID (Which is a long number you can get by right clicking on any user and choosing "Copy user ID").
-
-* **!ignore USERID**
-Adds or removes an user to the ignore list. It requires administrative privileges in order to be executed and works in the same way than the !admin command.
-
+* **//** Ignore / Exclusive  
+  This prefix is defined in the **Config** tab and determines which messages the bot ignores or listens to exclusively.  
+  By default, messages starting with "//" are ignored, but you can change this behavior and prefix to whatever you want (e.g., the bot only answering messages starting with "/").
 ------------
 
 ## Repository Disclaimer

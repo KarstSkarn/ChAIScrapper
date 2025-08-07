@@ -1,0 +1,13 @@
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\ChAIScrapperWF.pdb
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\selenium-manager\linux\selenium-manager
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\selenium-manager\macos\selenium-manager
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\selenium-manager\windows\selenium-manager.exe
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\libmp3lame.32.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\libmp3lame.64.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\D3DCompiler_47_cor3.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\PenImc_cor3.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\PresentationNative_cor3.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\vcruntime140_cor3.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\wpfgfx_cor3.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\Magick.Native-Q8-x64.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\publish\win-x64\ChAIScrapperWF.exe

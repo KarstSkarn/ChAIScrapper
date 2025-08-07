@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using Discord;
+using Discord.Interactions;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,18 +15,32 @@ using System.Reflection.Metadata;
 using Discord.Audio;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
-using static ChAIScrapper.ChAIScrapperProgram;
+using Discord.Interactions;
+using System.Reflection;
+using ChAIScrapperWF;
+using ImageMagick;
 
-namespace ChAIScrapper
+namespace ChAIScrapperWF
 {
     public static class ChAIDiscordBot
     {
         private static readonly SemaphoreSlim RateLimitSemaphore = new SemaphoreSlim(1, 1);
         private static readonly ConcurrentQueue<(ulong, string)> MessageQueue = new ConcurrentQueue<(ulong, string)>();
+        private static readonly ConcurrentQueue<(ulong, string)> DirectMessageQueue = new ConcurrentQueue<(ulong, string)>();
         private static ConcurrentQueue<(ulong, string)> FileQueue = new ConcurrentQueue<(ulong, string)>();
         private static readonly TimeSpan RateLimitDelay = TimeSpan.FromMilliseconds(1000 / 5); // 5 messages per second
         public static DiscordSocketClient discordClient = null;
+        //public static InteractionService _interactionService;
+        //public static IServiceProvider _services;
         private static Process ffmpeg;
+
+        public static PictureBox botPanelImage;
+        public static Label DMCounterLabel;
+        public static Label AIStatusLabel;
+        public static Label ResponsesCounterLabel;
+        public static ListBox ignoreListBox;
+        public static TextBox characterURLTextBox;
+        public static ChAIWF mainForm;
 
         public static async Task RunDiscordBotAsync(CancellationTokenSource cancellationToken)
         {
@@ -35,9 +50,63 @@ namespace ChAIScrapper
             };
 
             discordClient = new DiscordSocketClient(config);
+            //_interactionService = new InteractionService(discordClient);
 
             discordClient.Log += LogAsync;
             discordClient.MessageReceived += MessageReceivedAsync;
+
+            //await _interactionService.AddModuleAsync<SlashCommandsModule>(null);
+
+            /*
+            discordClient.Ready += async () =>
+            {
+                await _interactionService.RegisterCommandsGloballyAsync();
+            };
+            */
+
+            discordClient.Ready += async () =>
+            {
+                Global.discordBotUserID = discordClient.CurrentUser.Id;
+
+                lock (Global.lockInternalData)
+                {
+                    if (!Global.internalIgnoreList.Contains(Global.discordBotUserID))
+                    {
+                        Global.internalIgnoreList.Add(Global.discordBotUserID);
+                        if (mainForm.InvokeRequired)
+                        {
+                            mainForm.Invoke(new Action(() =>
+                            {
+                                mainForm.ForceSaveCurrentData();
+                            }));
+                        }
+                        else
+                        {
+                            mainForm.ForceSaveCurrentData();
+                        }
+                    }
+                    if (!ignoreListBox.Items.Contains(Global.discordBotUserID + " (Bot Itself)"))
+                    {
+                        ignoreListBox.Items.Add(Global.discordBotUserID + " (Bot Itself)");
+                    }
+                }
+
+                foreach (var guild in discordClient.Guilds)
+                {
+                    if (guild.Id != Global.discordServerID)
+                    {
+                        try
+                        {
+                            await guild.LeaveAsync();
+                            ChAIO.WriteDiscord("Bot did leave the guild [ " + guild.Id + " / " + guild.Name + " ] because is not the main one!");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error exiting from a server {guild.Name}: {ex.Message}");
+                        }
+                    }
+                }
+            };
 
             await discordClient.LoginAsync(TokenType.Bot, Global.discordBotToken);
             await discordClient.StartAsync();
@@ -46,6 +115,7 @@ namespace ChAIScrapper
             {
                 var processFileQueueTask = Task.Run(() => ProcessFileQueueAsync(discordClient, cancellationToken.Token), cancellationToken.Token);
                 var processMessageQueueTask = Task.Run(() => ProcessMessageQueueAsync(discordClient, cancellationToken.Token), cancellationToken.Token);
+                var processDirectMessageQueueTask = Task.Run(() => ProcessDirectMessagesQueueAsync(discordClient, cancellationToken.Token), cancellationToken.Token);
                 var checkAndSendFeasibleAnswerTask = Task.Run(() => CheckAndSendFeasibleAnswerAsync(discordClient, cancellationToken.Token), cancellationToken.Token);
 
                 while (!cancellationToken.Token.IsCancellationRequested)
@@ -58,17 +128,44 @@ namespace ChAIScrapper
                     if (writtingState)
                     {
                         // Simulate typing in the default channel
-                        var defaultChannel = discordClient.GetChannel(Global.discordChannelID) as SocketTextChannel;
-                        if (defaultChannel != null)
+                        if (Global.currentDMBuffer == null)
                         {
-                            await defaultChannel.TriggerTypingAsync();
+                            var defaultChannel = discordClient.GetChannel(Global.discordChannelID) as SocketTextChannel;
+                            if (defaultChannel != null)
+                            {
+                                await defaultChannel.TriggerTypingAsync();
+                                if (Global.botYTVirtualWatch && !Global.botYTPause)
+                                {
+                                    //SetBotStatus("Answering While Watching a YT Video...");
+                                    SetBotStatus("Answering Discord Channel... (YT Video)");
+                                }
+                                else
+                                {
+                                    SetBotStatus("Answering Discord Channel...");
+                                }
+                            }
+                        }
+                        else // Simulate typing in the proper DM Chat
+                        {
+                            var user = discordClient.GetUser(Global.currentDMBuffer.ID);
+
+                            if (user != null)
+                            {
+                                var dmChannel = await user.CreateDMChannelAsync();
+
+                                if (dmChannel != null)
+                                {
+                                    await dmChannel.TriggerTypingAsync();
+                                    SetBotStatus("Answering DM...");
+                                }
+                            }
                         }
                     }
 
                     await Task.Delay(500);
                 }
 
-                await Task.WhenAll(processMessageQueueTask, checkAndSendFeasibleAnswerTask, processFileQueueTask);
+                await Task.WhenAll(processDirectMessageQueueTask, processMessageQueueTask, checkAndSendFeasibleAnswerTask, processFileQueueTask);
             }
             catch (OperationCanceledException)
             {
@@ -78,13 +175,13 @@ namespace ChAIScrapper
             {
                 await discordClient.StopAsync();
                 await discordClient.LogoutAsync();
-                discordClient.Dispose();
+                //discordClient.Dispose();
             }
         }
 
         public static Task LogAsync(LogMessage log)
         {
-            ChAIScrapperProgram.Write(log.ToString());
+            ChAIO.WriteDiscord(log.ToString());
             return Task.CompletedTask;
         }
 
@@ -92,15 +189,129 @@ namespace ChAIScrapper
         {
             try
             {
-                // Only process messages from the designated channel and ignore messages from the bot itself
-                // This allows more than one bot in the same text channel.
-                if (message.Channel.Id != Global.discordChannelID || message.Author.Id == Global.discordBotUserID)
+                if (Global.internalIgnoreList.Contains(message.Author.Id))
                 {
                     return;
                 }
 
                 string messageContent = RemoveNonBmpCharacters(message.Content);
+                if (messageContent == null) { return; }
+
+                // Check if the message is from a DM channel
+                if (message.Channel is SocketDMChannel dmChannel)
+                {
+                    ChAIO.WriteDiscord("DM Received: " + messageContent);
+                    ChAIO.WriteDiscord("DM From: " + message.Author.ToString());
+
+                    if (Global.loadedData.ALLOWDMS || Global.internalAdminList.Contains(message.Author.Id))
+                    {
+
+                        if (messageContent.StartsWith("!"))
+                        {
+                            EnqueueDirectMessage(message.Author.Id, "> *You can't use commands on DMs!*");
+                            return;
+                        }
+
+                        if (Global.botAudioMode)
+                        {
+                            EnqueueDirectMessage(message.Author.Id, "> *You can't use DMs while AI has the !audio function enabled!*");
+                            return;
+                        }
+
+                        lock (Global.lockInternalData)
+                        {
+                            ChAIDataStructures.DMBuffer newDM = new ChAIDataStructures.DMBuffer();
+                            newDM.AUTHOR = message.Author.ToString();
+
+                            newDM.CONTENT = messageContent;
+
+                            newDM.ID = message.Author.Id;
+
+                            newDM.TIME = DateTime.Now;
+
+                            Global.DMBufferList.Add(newDM);
+
+                            if (DMCounterLabel.InvokeRequired)
+                            {
+                                DMCounterLabel.Invoke(new Action(() =>
+                                {
+                                    DMCounterLabel.Text = Global.DMBufferList.Count.ToString();
+                                }));
+                            }
+                            else
+                            {
+                                DMCounterLabel.Text = Global.DMBufferList.Count.ToString();
+                            }
+                        }
+
+                        if (Global.botYTVirtualWatch)
+                        {
+                            EnqueueDirectMessage(message.Author.Id, "> *" + Global.discordBotIAName + " is currently watching YT and won't answer until the current video ends...");
+                        }
+                    }
+                    else
+                    {
+                        EnqueueDirectMessage(message.Author.Id, "> Sorry, *" + Global.discordBotIAName + " won't accept DMs right now! *(Closed by administrator)*");
+                    }
+                    return;
+                }
+
+                // Only process messages from the designated channel and ignore messages from the bot itself
+                // This allows more than one bot in the same text channel.
+                if (message.Channel.Id != Global.discordChannelID)
+                {
+                    return;
+                }
+
                 messageContent = await ReplaceUserMentionsWithUsernames(messageContent);
+
+                if (messageContent == "!lock")
+                {
+                    lock (Global.lockInternalData)
+                    {
+                        if (Global.internalAdminList.Contains(message.Author.Id))
+                        {
+                            if (Global.adminLockFlag == false)
+                            {
+                                Global.adminLockFlag = true;
+                                Global.loadedData.ADMINISTRATIVELOCK = Global.adminLockFlag;
+                                EnqueueMessage(message.Channel.Id, "> Administrative commands are now locked!");
+                            }
+                            else
+                            {
+                                Global.adminLockFlag = false;
+                                Global.loadedData.ADMINISTRATIVELOCK = Global.adminLockFlag;
+                                EnqueueMessage(message.Channel.Id, "> Administrative commands are now unlocked!");
+                            }
+                        }
+                        else
+                        {
+                            EnqueueMessage(message.Channel.Id, "> You don't have enough privileges to execute this command!");
+                        }
+                        return;
+                    }
+                }
+
+                if (messageContent.StartsWith("!dm"))
+                {
+                    lock (Global.lockInternalData)
+                    {
+                        if (Global.internalAdminList.Contains(message.Author.Id))
+                        {
+                            if (Global.loadedData.ALLOWDMS)
+                            {
+                                Global.loadedData.ALLOWDMS = false;
+                                EnqueueMessage(message.Channel.Id, "> DMs are now closed!");
+                            }
+                            else
+                            {
+                                Global.loadedData.ALLOWDMS = true;
+                                EnqueueMessage(message.Channel.Id, "> DMs are now open!");
+                            }
+                        }
+                        return;
+                    }
+                }
 
                 if (messageContent == "!ping")
                 {
@@ -113,58 +324,93 @@ namespace ChAIScrapper
                     EnqueueMessage(message.Channel.Id, "> **!reset** Resets ChaAIScrapper");
                     EnqueueMessage(message.Channel.Id, "> **!ytwatch URL** Forces the AI to watch a YT video");
                     EnqueueMessage(message.Channel.Id, "> **!refresh** Refreshes Character AI webpage");
-                    EnqueueMessage(message.Channel.Id, "> **!fb 1-5** Sets feedback to the last message the AI sent");
-                    EnqueueMessage(message.Channel.Id, "> **!character URL** Changes the current chat used by the AI");
+                    EnqueueMessage(message.Channel.Id, "> **!audio** Enables/Disables the voice notes function");
+                    EnqueueMessage(message.Channel.Id, "> **!dm** Opens/Closes the DMs");
+                    EnqueueMessage(message.Channel.Id, "> **!lock** Locks/Unlocks bot commands to non-administrative users");
                     return;
                 }
 
-                if (messageContent == "!refresh")
+                if (!Global.adminLockFlag || Global.internalAdminList.Contains(message.Author.Id))
                 {
-                    Global.refreshFlag = true;
+                    if (messageContent == "!refresh")
+                    {
+                        SetBotStatus("Refreshing ChAI Page...");
+                        EnqueueMessage(message.Channel.Id, "> Attempting page refresh...");
+                        Global.refreshFlag = true;
+                        return;
+                    }
+
+                    /*
+                    if (messageContent.StartsWith("!character "))
+                    {
+                        lock (Global.lockInternalData)
+                        {
+                            SetBotStatus("Switching Character...");
+                            TimeSpan timeDifference = DateTime.Now - Global.lastCharacterChangeTime;
+                            if (timeDifference.TotalMinutes >= 5)
+                            {
+                                Global.characterAIChatURL = messageContent.Substring("!character ".Length);
+                                Global.loadedData.CHAIURL = Global.characterAIChatURL;
+                                if (characterURLTextBox.InvokeRequired)
+                                {
+                                    characterURLTextBox.Invoke(new Action(() =>
+                                    {
+                                        characterURLTextBox.Text = Global.characterAIChatURL;
+                                    }));
+                                }
+                                else
+                                {
+                                    characterURLTextBox.Text = Global.characterAIChatURL;
+                                }
+                                if (mainForm.InvokeRequired)
+                                {
+                                    mainForm.Invoke(new Action(() =>
+                                    {
+                                        mainForm.ForceSaveCurrentData();
+                                    }));
+                                }
+                                else
+                                {
+                                    mainForm.ForceSaveCurrentData();
+                                }
+                                Global.lastCharacterChangeTime = DateTime.Now;
+                                Global.programSoftResetFlag = true;
+                                return;
+                            }
+                            else
+                            {
+                                double remainingSeconds = (5 * 60) - timeDifference.TotalSeconds;
+                                EnqueueMessage(message.Channel.Id, "> You cannot change character that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
+                                return;
+                            }
+                        }
+                    }
+                    */
+
+                    if (messageContent.StartsWith("!reset"))
+                    {
+                        lock (Global.lockInternalData)
+                        {
+                            TimeSpan timeDifference = DateTime.Now - Global.lastCharacterChangeTime;
+                            if (timeDifference.TotalMinutes >= 5)
+                            {
+                                Global.lastCharacterChangeTime = DateTime.Now;
+                                Global.programSoftResetFlag = true;
+                                return;
+                            }
+                            else
+                            {
+                                double remainingSeconds = (5 * 60) - timeDifference.TotalSeconds;
+                                EnqueueMessage(message.Channel.Id, "> You cannot reset the bot that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
+                                return;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    EnqueueMessage(message.Channel.Id, "> You don't have enough privileges to execute this command!");
                     return;
-                }
-
-                if (messageContent.StartsWith("!character "))
-                {
-                    lock (Global.lockInternalData)
-                    {
-                        TimeSpan timeDifference = DateTime.Now - Global.lastCharacterChangeTime;
-                        if (timeDifference.TotalMinutes >= 5)
-                        {
-                            Global.characterAIChatURL = messageContent.Substring("!character ".Length);
-                            Global.loadedData.CHAIURL = Global.characterAIChatURL;
-                            ChAIScrapperProgram.SaveObjectToFile<SavedData>(Global.loadedData, "ChAISData.xml");
-                            Global.lastCharacterChangeTime = DateTime.Now;
-                            Global.programSoftResetFlag = true;
-                            return;
-                        }
-                        else
-                        {
-                            double remainingSeconds = (5 * 60) - timeDifference.TotalSeconds;
-                            EnqueueMessage(message.Channel.Id, "> You cannot change character that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
-                            return;
-                        }
-                    }
-                }
-
-                if (messageContent.StartsWith("!reset"))
-                {
-                    lock (Global.lockInternalData)
-                    {
-                        TimeSpan timeDifference = DateTime.Now - Global.lastCharacterChangeTime;
-                        if (timeDifference.TotalMinutes >= 5)
-                        {
-                            Global.lastCharacterChangeTime = DateTime.Now;
-                            Global.programSoftResetFlag = true;
-                            return;
-                        }
-                        else
-                        {
-                            double remainingSeconds = (5 * 60) - timeDifference.TotalSeconds;
-                            EnqueueMessage(message.Channel.Id, "> You cannot reset the bot that soon! Remaining Seconds: " + remainingSeconds.ToString("F0"));
-                            return;
-                        }
-                    }
                 }
 
                 if (messageContent.StartsWith("!ytstop"))
@@ -180,6 +426,7 @@ namespace ChAIScrapper
                             EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** stopped watching YouTube...");
                             Global.botYTVirtualWatch = false;
                             Global.botYTWatchData = null;
+                            SetBotStatus("Stopped YT Video...");
                         }
                     }
                 }
@@ -194,6 +441,7 @@ namespace ChAIScrapper
                             {
                                 EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** resumed YouTube...");
                                 Global.botYTPause = false;
+                                SetBotStatus("Resumed YT Video...");
                             }
                         }
                         else
@@ -213,6 +461,7 @@ namespace ChAIScrapper
                             {
                                 EnqueueMessage(message.Channel.Id, "> ⏸ **" + Global.discordBotIAName + "** paused YouTube...");
                                 Global.botYTPause = true;
+                                SetBotStatus("Paused YT Video...");
                             }
                         }
                         else
@@ -250,38 +499,46 @@ namespace ChAIScrapper
                                 {
                                     string videoUrl = messageContent.Substring("!ytwatch ".Length).Trim();
                                     YTVirtualWatch temporaryYTVirtualWatchData = await ChAIExternal.GetYouTubeSubtitlesAndDetailsAsync(videoUrl);
-                                    if (temporaryYTVirtualWatchData.YTCAPTIONS.Count > 0 && temporaryYTVirtualWatchData.LENGTH.TotalSeconds > 0)
+                                    if (temporaryYTVirtualWatchData.LENGTH == TimeSpan.Zero)
                                     {
-                                        lock (Global.lockInternalData)
-                                        {
-                                            Global.botYTVirtualWatchTime = TimeSpan.Zero;
-                                            Global.botYTWatchData = temporaryYTVirtualWatchData;
-                                            Global.botYTVirtualWatchLocalTime = DateTime.Now;
-                                            Global.botYTPause = false;
-                                            Global.botYTIntro = true;
-                                        }
-                                        EnqueueMessage(message.Channel.Id, "> Video Selected is **" + Global.botYTWatchData.YTTITLE + "** by **" + Global.botYTWatchData.YTUPLOADER + "**");
-                                        EnqueueMessage(message.Channel.Id, "> To stop the video use !ytstop.");
-                                        EnqueueMessage(message.Channel.Id, "> Use !ytpause and !resume to halt the video playback.");
-                                        if (Global.botAudioMode)
-                                        {
-                                            EnqueueMessage(message.Channel.Id, "> Warning: Audio voice notes been disabled automatically to improve the AI's answer time while watching videos. You can forcefully enable them again using !audio");
-                                            Global.botAudioMode = false;
-                                        }
+                                        EnqueueMessage(message.Channel.Id, "> Error: Not a valid YT link! (Length is zero!)");
                                     }
                                     else
                                     {
-                                        EnqueueMessage(message.Channel.Id, "> Error: Video has not enough data!");
-                                        lock (Global.lockInternalData)
+                                        if (temporaryYTVirtualWatchData.YTCAPTIONS.Count > 0 && temporaryYTVirtualWatchData.LENGTH.TotalSeconds > 0)
                                         {
-                                            Global.botYTWatchData = null;
-                                            Global.botYTVirtualWatch = false;
+                                            lock (Global.lockInternalData)
+                                            {
+                                                Global.botYTVirtualWatchTime = TimeSpan.Zero;
+                                                Global.botYTWatchData = temporaryYTVirtualWatchData;
+                                                Global.botYTVirtualWatchLocalTime = DateTime.Now;
+                                                Global.botYTPause = false;
+                                                Global.botYTIntro = true;
+                                            }
+                                            EnqueueMessage(message.Channel.Id, "> Video Selected is **" + Global.botYTWatchData.YTTITLE + "** by **" + Global.botYTWatchData.YTUPLOADER + "**");
+                                            EnqueueMessage(message.Channel.Id, "> To stop the video use !ytstop.");
+                                            EnqueueMessage(message.Channel.Id, "> Use !ytpause and !ytresume to halt the video playback.");
+                                            if (Global.botAudioMode)
+                                            {
+                                                EnqueueMessage(message.Channel.Id, "> Warning: Audio voice notes been disabled automatically to improve the AI's answer time while watching videos. You can forcefully enable them again using !audio");
+                                                Global.botAudioMode = false;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            EnqueueMessage(message.Channel.Id, "> Error: Video has not enough data!");
+                                            lock (Global.lockInternalData)
+                                            {
+                                                Global.botYTWatchData = null;
+                                                Global.botYTVirtualWatch = false;
+                                            }
                                         }
                                     }
                                 }
-                                catch
+                                catch (Exception ex)
                                 {
                                     EnqueueMessage(message.Channel.Id, "> Error: Not a valid YT link!");
+                                    ChAIO.WriteGeneral(ex.ToString());
                                     lock (Global.lockInternalData)
                                     {
                                         Global.botYTWatchData = null;
@@ -340,52 +597,31 @@ namespace ChAIScrapper
                     }
                 }
 
-                if (messageContent.StartsWith("!fb ") || messageContent.ToLower().StartsWith("!feedback "))
+                lock (Global.lockInternalData)
                 {
-                    try
+                    if (!Global.discriminatoryExclusive)
                     {
-                        string feedbackLevelString = messageContent.Split(' ')[1];
-                        if (int.TryParse(feedbackLevelString, out int feedbackLevel))
+                        if (messageContent.StartsWith(Global.discriminatoryString))
                         {
-                            if (feedbackLevel <= 0)
-                            {
-                                EnqueueMessage(message.Channel.Id, "> Feedback must be greater than 0 and equal or smaller to 4!");
-                                return;
-                            }
-                            if (feedbackLevel > 4)
-                            {
-                                EnqueueMessage(message.Channel.Id, "> Feedback must be greater than 0 and equal or smaller to 4!");
-                                feedbackLevel = 4;
-                            }
-
-                            string feedbackString = "";
-                            for (int i = 0; i < feedbackLevel; i++)
-                            {
-                                feedbackString += "⭐";
-                            }
-                            EnqueueMessage(message.Channel.Id, "> Feedback sent! " + feedbackString);
-                            Global.discordFeedbackLevel = feedbackLevel;
                             return;
                         }
                     }
-                    catch
+                    else
                     {
-                        return;
+                        if (!messageContent.StartsWith(Global.discriminatoryString))
+                        {
+                            return;
+                        }
                     }
                 }
 
-                if (messageContent.StartsWith("//"))
-                {
-                    return;
-                }
-
                 // Log the message details
-                ChAIScrapperProgram.Write($"Received message from {message.Author.Username} (ID: {message.Author.Id}): {messageContent}");
-                ChAIScrapperProgram.Write($"Message ID: {message.Id}, Channel ID: {message.Channel.Id}, Timestamp: {message.Timestamp}");
+                ChAIO.WriteDiscord($"Received message from {message.Author.Username} (ID: {message.Author.Id}): {messageContent}");
+                ChAIO.WriteDiscord($"Message ID: {message.Id}, Channel ID: {message.Channel.Id}, Timestamp: {message.Timestamp}");
 
                 if (string.IsNullOrWhiteSpace(messageContent))
                 {
-                    ChAIScrapperProgram.Write("The message content is empty or whitespace.");
+                    ChAIO.WriteDiscord("The message content is empty or whitespace.");
                     return;
                 }
 
@@ -401,8 +637,8 @@ namespace ChAIScrapper
                         {
                             string elapsedTimeString = FormatElapsedTime(elapsedTime);
                             DateTime now = DateTime.Now;
-                            string formattedDateTime = now.ToString("HH ':' mm '24h format hour' dd 'Day' dddd 'Month' MMMM 'Year' yyyy");
-                            timeMetadata += @"( LOCAL TIME IS " + formattedDateTime + @" )";
+                            string formattedDateTime = now.ToString("HH ':' mm '(24h format hour)' dd 'Day' dddd 'Month' MMMM 'Year' yyyy");
+                            timeMetadata += @"[DISCORD MAIN PUBLIC TEXT CHANNEL]( LOCAL TIME IS " + formattedDateTime + @" )";
                             timeMetadata += @"( " + elapsedTimeString + @" AFTER. TO TAG SOMEONE USE @username )";
                             Global.lastDiscordMessageTime = DateTime.Now;
                         }
@@ -423,7 +659,7 @@ namespace ChAIScrapper
                                 string replyMessageContent = repliedMessage.Content;
                                 replyMessageContent = SanitizeString(replyMessageContent);
                                 replyMessageContent = await ReplaceUserMentionsWithUsernames(replyMessageContent);
-                                ChAIScrapperProgram.Write($"Message is a reference to another message sent by the bot: {replyMessageContent}");
+                                ChAIO.WriteDiscord($"Message is a reference to another message sent by the bot: {replyMessageContent}");
 
                                 string sanitizedMessageContent = SanitizeString(message.Content);
 
@@ -444,7 +680,7 @@ namespace ChAIScrapper
                                 string replyMessageContent = repliedMessage.Content;
                                 replyMessageContent = SanitizeString(replyMessageContent);
                                 replyMessageContent = await ReplaceUserMentionsWithUsernames(replyMessageContent);
-                                ChAIScrapperProgram.Write($"Message is a reference to another message sent by other user: {replyMessageContent}");
+                                ChAIO.WriteDiscord($"Message is a reference to another message sent by other user: {replyMessageContent}");
 
                                 string sanitizedMessageContent = SanitizeString(message.Content);
 
@@ -493,9 +729,65 @@ namespace ChAIScrapper
             }
             catch (Exception ex)
             {
-                ChAIScrapperProgram.Write($"Discord String Compiler Error: " + ex.ToString());
+                ChAIO.WriteDiscord($"Discord String Compiler Error: " + ex.ToString());
                 Global.AppendToFile("ErrorLog.txt", ex.ToString());
             }
+        }
+        // Enqueue the DM message for a user by their Discord user ID
+        public static void EnqueueDirectMessage(ulong userId, string message)
+        {
+            // Enqueue the direct message with user ID
+            DirectMessageQueue.Enqueue((userId, message));
+
+            // Skip processing if the program soft reset flag is set
+            if (Global.programSoftResetFlag)
+            {
+                return;
+            }
+        }
+
+        // Process the Direct Message Queue asynchronously
+        public static async Task ProcessDirectMessagesQueueAsync(DiscordSocketClient client, CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                // Dequeue a message if available
+                if (DirectMessageQueue.TryDequeue(out var queuedMessage))
+                {
+                    // Wait for rate limiting
+                    await RateLimitSemaphore.WaitAsync();
+
+                    try
+                    {
+                        // Find the user by their ID
+                        var user = client.GetUser(queuedMessage.Item1);
+                        if (user != null)
+                        {
+                            // Send the direct message to the user
+                            await user.SendMessageAsync(queuedMessage.Item2);
+                        }
+
+                        // Apply rate limit delay after sending the message
+                        await Task.Delay(RateLimitDelay);
+                    }
+                    finally
+                    {
+                        RateLimitSemaphore.Release();
+                    }
+                }
+                else
+                {
+                    // If no messages in the queue, wait before checking again
+                    await Task.Delay(100);
+                }
+
+                // Check for soft reset flag to exit
+                if (Global.programSoftResetFlag)
+                {
+                    return;
+                }
+            }
+            return;
         }
         public static void EnqueueMessage(ulong channelId, string message)
         {
@@ -561,17 +853,17 @@ namespace ChAIScrapper
                                 {
                                     await channel.SendFileAsync(queuedFile.Item2, "", false);
                                 }
-                                ChAIScrapperProgram.Write("File sent successfully.");
+                                ChAIO.WriteDiscord("File sent successfully.");
                             }
                             catch (Exception ex)
                             {
-                                ChAIScrapperProgram.Write("Failed to send file: " + ex.ToString());
+                                ChAIO.WriteDiscord("Failed to send file: " + ex.ToString());
                                 Global.AppendToFile("ErrorLog.txt", ex.ToString());
                             }
                         }
                         else
                         {
-                            ChAIScrapperProgram.Write($"Channel with ID {queuedFile.Item1} not found.");
+                            ChAIO.WriteDiscord($"Channel with ID {queuedFile.Item1} not found.");
                         }
                     }
                     finally
@@ -600,36 +892,98 @@ namespace ChAIScrapper
                         {
                             if (!Global.botYTPause)
                             {
+                                SetBotStatus("Watching a YT Video...");
                                 EnqueueMessage(Global.discordChannelID, "> * " + Global.discordBotIAName + " is now watching **" + Global.botYTWatchData.YTTITLE + "** " + Global.botYTVirtualWatchTime.ToString() + " / " + Global.botYTWatchData.LENGTH.ToString());
                             }
                         }
                         EnqueueMessage(Global.discordChannelID, Global.lastDiscordAnswer);
+                        Global.responsesCounter++;
+                        if (ResponsesCounterLabel.InvokeRequired)
+                        {
+                            ResponsesCounterLabel.Invoke(new Action(() =>
+                            {
+                                ResponsesCounterLabel.Text = Global.responsesCounter.ToString();
+                            }));
+                        }
+                        else
+                        {
+                            ResponsesCounterLabel.Text = Global.responsesCounter.ToString();
+                        }
                         Global.previousDiscordAnswer = Global.lastDiscordAnswer;
                         Global.lastDiscordAnswer = "";
                     }
                     try
                     {
-                        if (Global.discordImageBytes != null && Global.discordImageFlag && !Global.discordImageUpdateFlag)
+                        if (Global.loadedData.CHANGEPROFILEPICTURE)
                         {
-                            using (Stream stream = new MemoryStream(Global.discordImageBytes))
+                            if (Global.discordImageBytes != null && Global.discordImageFlag && !Global.discordImageUpdateFlag)
                             {
-                                client.CurrentUser.ModifyAsync(properties => properties.Avatar = new Image(stream)).Wait();
+                                // HERE
+                                try
+                                {
+                                    using (Stream stream = new MemoryStream(Global.discordImageBytes))
+                                    {
+                                        client.CurrentUser.ModifyAsync(properties => properties.Avatar = new Discord.Image(stream)).Wait();
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    ChAIO.WriteDiscord(ex.ToString());
+                                }
+                                try
+                                {
+                                    string heicPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "botAvatar.heic");
+                                    string jpgPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "botAvatar_converted.jpg");
+                                    File.WriteAllBytes(heicPath, Global.discordImageBytes);
+
+                                    try
+                                    {
+                                        using (var image = new MagickImage(heicPath))
+                                        {
+                                            image.Format = MagickFormat.Jpeg;
+                                            image.Write(jpgPath);
+                                        }
+
+                                        if (botPanelImage.Image != null)
+                                        {
+                                            botPanelImage.Image.Dispose();
+                                            botPanelImage.Image = null;
+                                        }
+                                        botPanelImage.ImageLocation = jpgPath;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        ChAIO.WriteGeneral("Error converting HEIC to JPG: " + ex.Message);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    ChAIO.WriteGeneral("Error loading image into PictureBox: " + ex.Message);
+                                }
+                                Global.discordImageUpdateFlag = true;
                             }
+                        }
+                        else
+                        {
                             Global.discordImageUpdateFlag = true;
                         }
                     }
                     catch (Exception ex)
                     {
-                        ChAIScrapperProgram.Write("It was not possible to upload the current AI Image!: " + ex.ToString());
+                        ChAIO.WriteDiscord("It was not possible to upload the current AI Image!: " + ex.ToString());
                         Global.AppendToFile("ErrorLog.txt", ex.ToString());
                     }
 
                     if (Global.discordBotScrapedIAName != Global.discordBotIAName)
                     {
-                        foreach (var guild in client.Guilds)
+                        if (Global.loadedData.CHANGEUSERNAME)
                         {
-                            var botGuildUser = guild.GetUser(client.CurrentUser.Id);
-                            botGuildUser.ModifyAsync(properties => properties.Nickname = "ChAI.S (AI: " + Global.discordBotScrapedIAName + ")").Wait();
+                            foreach (var guild in client.Guilds)
+                            {
+                                var botGuildUser = guild.GetUser(client.CurrentUser.Id);
+                                string newBotUsername = Global.loadedData.USERNAMESTENCIL.Replace("USERNAME", Global.discordBotScrapedIAName);
+                                botGuildUser.ModifyAsync(properties => properties.Nickname = newBotUsername).Wait();
+                            }
                         }
 
                         Global.discordBotIAName = Global.discordBotScrapedIAName;
@@ -703,58 +1057,36 @@ namespace ChAIScrapper
 
             return sanitized;
         }
-        public static string RemoveNonBmpCharacters(string input)
+        public static void SetBotStatus(string status)
         {
-            try
+            if (AIStatusLabel.InvokeRequired)
             {
-                if (input == null) return null;
-
-                StringBuilder stringBuilder = new StringBuilder();
-                foreach (var rune in input.EnumerateRunes())
+                AIStatusLabel.Invoke(new Action(() =>
                 {
-                    if (rune.IsBmp)
-                    {
-                        stringBuilder.Append(rune.ToString());
-                    }
-                }
-
-                return stringBuilder.ToString();
-                }
-            catch (Exception ex)
+                    AIStatusLabel.Text = status;
+                }));
+            }
+            else
             {
-                ChAIScrapperProgram.Write("Error removing Non-BMP Characters: " + ex.Message);
-                Global.AppendToFile("ErrorLog.txt", ex.ToString());
-                return input;
+                AIStatusLabel.Text = status;
             }
         }
-        private struct StringRuneEnumerator
+        public static string RemoveNonBmpCharacters(string input)
         {
-            private readonly string _string;
-            private int _index;
+            if (string.IsNullOrEmpty(input))
+                return input;
 
-            public StringRuneEnumerator(string @string)
+            var sb = new System.Text.StringBuilder(input.Length);
+
+            foreach (var ch in input.Normalize(NormalizationForm.FormC))
             {
-                _string = @string;
-                _index = 0;
-                Current = default;
-            }
-
-            public Rune Current { get; private set; }
-
-            public bool MoveNext()
-            {
-                if (_index >= _string.Length) return false;
-
-                if (Rune.TryGetRuneAt(_string, _index, out Rune rune))
+                if (ch <= 0xFFFF && !char.IsSurrogate(ch) && !char.IsControl(ch))
                 {
-                    Current = rune;
-                    _index += rune.Utf16SequenceLength;
-                    return true;
+                    sb.Append(ch);
                 }
-
-                _index++;
-                return false;
             }
+
+            return sb.ToString();
         }
         public static string DuplicateLineBreaks(string input)
         {
@@ -803,7 +1135,7 @@ namespace ChAIScrapper
                 }
             }
 
-            return messageContent;        
+            return messageContent;
         }
     }
 }
