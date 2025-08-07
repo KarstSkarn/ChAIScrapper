@@ -5,8 +5,9 @@
 
 *It motivates me for this and many other projects!*
 
-
 Demo/Assistance Discord: https://discord.com/invite/d9rNwkerZw
+
+<img width="802" height="482" alt="maincapture" src="https://github.com/KarstSkarn/ChAIScrapper/blob/main/maincapture.png?raw=true" />
 
 ### Disclaimer
 This program has been created for experimental and demonstrative purposes regarding the functionalities that AI applications, such as CharacterAI, could have in an environment like Discord.
@@ -67,6 +68,8 @@ In this version, this step is made super easy!
 Open the program `ChAIScrapperV4.0.exe`. Go to the 'Config' tab.  
 There you have all the options and customizations.
 
+<img width="802" height="482" alt="maincapture" src="https://github.com/KarstSkarn/ChAIScrapper/blob/main/setupguide.png?raw=true" />
+
 1. First, copy and paste your Discord bot token into the **Discord Bot Token** textbox.  
 2. By right-clicking on the Discord text channel, get the **Channel ID** and paste it into the **Channel ID** textbox.  
    (You may have to enable **Developer Mode** in your Discord settings for this option to appear!)  
@@ -87,6 +90,7 @@ There you have all the options and customizations.
 2. Click **"Run"** and wait a few seconds until everything sets up automatically!  
 3. Enjoy!
 
+<img width="802" height="482" alt="maincapture" src="https://github.com/KarstSkarn/ChAIScrapper/blob/main/launchguide.png?raw=true" />
 
 ## Hosting multiple bots in the same computer
 This version is specially designed to make it easy to host multiple bots on the same computer.  
