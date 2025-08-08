@@ -230,7 +230,7 @@ All bot commands start with the **"!"** character.
 
 * **!ytwatch [URL]**  
   Starts the bot watching any YouTube video.  
-  Example: `!watch https://www.youtube.com/watch?v=dQw4w9WgXcQ`
+  Example: `!ytwatch https://www.youtube.com/watch?v=dQw4w9WgXcQ`
 
 * **!ytstop**  
   Completely stops and ends the playback of any YouTube video the bot is watching.
