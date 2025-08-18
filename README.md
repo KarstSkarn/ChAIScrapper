@@ -35,7 +35,7 @@ The use of this program and any potential liabilities are the sole responsibilit
 
 **Note:** The setup steps are exactly the same as in the older 4.0 version!
 
-#### 4.0 Features
+### 4.0 Features
 * An easy-to-setup and brand-new GUI!  
 * Possibility to talk to the bots using DMs.  
 * YouTube Virtual Videos AI Watch fully functional.  
