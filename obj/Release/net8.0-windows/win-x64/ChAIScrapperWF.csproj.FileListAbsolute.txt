@@ -1,6 +1,3 @@
-E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\selenium-manager\linux\selenium-manager
-E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\selenium-manager\macos\selenium-manager
-E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\selenium-manager\windows\selenium-manager.exe
 E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\libmp3lame.32.dll
 E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\libmp3lame.64.dll
 E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\ChAIScrapperWF.exe
@@ -512,3 +509,5 @@ E:\ChAIV4WF\ChAIScrapperWF\obj\Release\net8.0-windows\win-x64\refint\ChAIScrappe
 E:\ChAIV4WF\ChAIScrapperWF\obj\Release\net8.0-windows\win-x64\ChAIScrapperWF.pdb
 E:\ChAIV4WF\ChAIScrapperWF\obj\Release\net8.0-windows\win-x64\ChAIScrapperWF.genruntimeconfig.cache
 E:\ChAIV4WF\ChAIScrapperWF\obj\Release\net8.0-windows\win-x64\ref\ChAIScrapperWF.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\EmojiOne.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Release\net8.0-windows\win-x64\selenium-manager.exe

@@ -1,4 +1,4 @@
-# ChAIScrapper Chromium Version 4.0
+# ChAIScrapper Chromium Version 4.1
 *By KarstSkarn - https://karstskarn.carrd.co*
 
 *If you liked it you can support me on https://ko-fi.com/karstskarn*
@@ -24,7 +24,18 @@ The use of this program and any potential liabilities are the sole responsibilit
 - [Common FAQ](#file-security-check)
 - [Bot Commands](#bot-commands)
 
-### 4.0 Features
+### 4.1 Features
+* The bot now reacts to Discord message reactions!  
+* The mentions (@username) function now always works.  
+* YouTube Virtual Videos AI Watch can now watch videos in virtually any language and even use YouTube’s automatic subtitles.  
+* You can set a favorite language for YouTube videos, so it will prioritize watching them in that language.  
+* You can now define how often the bot will react to a video.  
+* Fixed bugs and crashes.  
+* Major optimizations.  
+
+**Note:** The setup steps are exactly the same as in the older 4.0 version!
+
+#### 4.0 Features
 * An easy-to-setup and brand-new GUI!  
 * Possibility to talk to the bots using DMs.  
 * YouTube Virtual Videos AI Watch fully functional.  
@@ -139,6 +150,13 @@ Once you have messaged the bot once in the text channel, it will answer your DMs
 
 ### Hint  
 It works better with the "Meow" AI model since it gives faster and shorter answers, making the conversation feel more realistic.
+
+## Changing preferred YouTube Videos Virtual Watch language
+By default, the bot will prefer to watch videos in the language defined in the **Code Language** textbox of the Config section. By default, this is `"en"` for English.
+
+If you want to change it to your preferred language, you can check the two-letter code associated with that language in the following standardization table:
+
+[ISO 639 Language Codes](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
 
 ## Common FAQ
 

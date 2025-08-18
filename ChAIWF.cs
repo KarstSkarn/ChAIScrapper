@@ -54,6 +54,9 @@ namespace ChAIScrapperWF
                         textBoxDiscordServerID.Text = newData.DISCORDSERVERID.ToString();
                         textBoxDiscriminatoryString.Text = newData.DISCRIMINATORYSTRING;
                         textBoxTimeout.Text = newData.TIMEOUT.ToString();
+                        boolDiscordReactions.Checked = newData.DISCORDREACTIONS;
+                        textBoxYTLapse.Text = newData.VIDEOSINTERVAL.ToString();
+                        textBoxLangCode.Text = newData.LANGCODE;
                         if (!newData.DISCRIMINATORYEXCLUSIVE)
                         {
                             buttonDiscriminatoryString.Text = "Ignore";
@@ -130,6 +133,9 @@ namespace ChAIScrapperWF
                 newData.DISCORDSERVERID = ulong.Parse(textBoxDiscordServerID.Text);
                 newData.DISCRIMINATORYSTRING = textBoxDiscriminatoryString.Text;
                 newData.TIMEOUT = int.Parse(textBoxTimeout.Text);
+                newData.DISCORDREACTIONS = boolDiscordReactions.Checked;
+                newData.VIDEOSINTERVAL = int.Parse(textBoxYTLapse.Text);
+                newData.LANGCODE = textBoxLangCode.Text;
                 if (buttonDiscriminatoryString.Text.Contains("Ignore"))
                 {
                     newData.DISCRIMINATORYEXCLUSIVE = false;
@@ -203,6 +209,9 @@ namespace ChAIScrapperWF
                 textBoxDiscordServerID.Text = newData.DISCORDSERVERID.ToString();
                 textBoxDiscriminatoryString.Text = newData.DISCRIMINATORYSTRING;
                 textBoxTimeout.Text = newData.TIMEOUT.ToString();
+                boolDiscordReactions.Checked = newData.DISCORDREACTIONS;
+                textBoxYTLapse.Text = newData.VIDEOSINTERVAL.ToString();
+                textBoxLangCode.Text = newData.LANGCODE;
                 if (!newData.DISCRIMINATORYEXCLUSIVE)
                 {
                     buttonDiscriminatoryString.Text = "Ignore";
@@ -314,6 +323,9 @@ namespace ChAIScrapperWF
                 newData.DISCORDSERVERID = ulong.Parse(textBoxDiscordServerID.Text);
                 newData.DISCRIMINATORYSTRING = textBoxDiscriminatoryString.Text;
                 newData.TIMEOUT = int.Parse(textBoxTimeout.Text);
+                newData.DISCORDREACTIONS = boolDiscordReactions.Checked;
+                newData.VIDEOSINTERVAL = int.Parse(textBoxYTLapse.Text);
+                newData.LANGCODE = textBoxLangCode.Text;
                 if (buttonDiscriminatoryString.Text.Contains("Ignore"))
                 {
                     newData.DISCRIMINATORYEXCLUSIVE = false;
@@ -376,6 +388,9 @@ namespace ChAIScrapperWF
                 newData.DISCORDSERVERID = ulong.Parse(textBoxDiscordServerID.Text);
                 newData.DISCRIMINATORYSTRING = textBoxDiscriminatoryString.Text;
                 newData.TIMEOUT = int.Parse(textBoxTimeout.Text);
+                newData.DISCORDREACTIONS = boolDiscordReactions.Checked;
+                newData.VIDEOSINTERVAL = int.Parse(textBoxYTLapse.Text);
+                newData.LANGCODE = textBoxLangCode.Text;
                 if (buttonDiscriminatoryString.Text.Contains("Ignore"))
                 {
                     newData.DISCRIMINATORYEXCLUSIVE = false;
@@ -448,6 +463,9 @@ namespace ChAIScrapperWF
                     newData.DISCORDSERVERID = ulong.Parse(textBoxDiscordServerID.Text);
                     newData.DISCRIMINATORYSTRING = textBoxDiscriminatoryString.Text;
                     newData.TIMEOUT = int.Parse(textBoxTimeout.Text);
+                    newData.DISCORDREACTIONS = boolDiscordReactions.Checked;
+                    newData.VIDEOSINTERVAL = int.Parse(textBoxYTLapse.Text);
+                    newData.LANGCODE = textBoxLangCode.Text;
                     if (buttonDiscriminatoryString.Text.Contains("Ignore"))
                     {
                         newData.DISCRIMINATORYEXCLUSIVE = false;
@@ -498,6 +516,10 @@ namespace ChAIScrapperWF
                 buttonDiscriminatoryString.Enabled = false;
                 groupBoxAdminList.Enabled = false;
                 groupBoxIgnoreList.Enabled = false;
+                boolDiscordReactions.Enabled = false;
+                boolDiscordReactions.Enabled = false;
+                textBoxYTLapse.Enabled = false;
+                textBoxLangCode.Enabled = false;
 
                 buttonRunChAIScrapper.Text = "Stop ChAIScrapper";
 
@@ -516,6 +538,9 @@ namespace ChAIScrapperWF
                 Global.discordServerID = newData.DISCORDSERVERID;
                 Global.discriminatoryString = newData.DISCRIMINATORYSTRING;
                 Global.discriminatoryExclusive = newData.DISCRIMINATORYEXCLUSIVE;
+                Global.discordReactions = newData.DISCORDREACTIONS;
+                Global.botYTVirtualWatchPace = TimeSpan.FromSeconds(Convert.ToDouble(newData.VIDEOSINTERVAL));
+                Global.preferredLanguageCode = newData.LANGCODE;
 
                 ChAIWebScrapper.AINameLabel = this.labelAIName;
                 ChAIDiscordBot.AIStatusLabel = this.labelAIStatus;
@@ -598,6 +623,9 @@ namespace ChAIScrapperWF
                 buttonDiscriminatoryString.Enabled = true;
                 groupBoxAdminList.Enabled = true;
                 groupBoxIgnoreList.Enabled = true;
+                boolDiscordReactions.Enabled = true;
+                textBoxYTLapse.Enabled = true;
+                textBoxLangCode.Enabled = true;
 
                 buttonRunChAIScrapper.Text = "Run ChAIScrapper";
 
@@ -810,6 +838,11 @@ namespace ChAIScrapperWF
             {
                 MessageBox.Show("Failed to open link: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void label42_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -57,6 +57,11 @@
             textBoxDiscordOutput = new TextBox();
             tabPage2 = new TabPage();
             groupBox7 = new GroupBox();
+            label42 = new Label();
+            textBoxLangCode = new TextBox();
+            boolDiscordReactions = new CheckBox();
+            label41 = new Label();
+            textBoxYTLapse = new TextBox();
             textBoxTimeout = new TextBox();
             label23 = new Label();
             buttonDiscriminatoryString = new Button();
@@ -114,6 +119,8 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             groupBox9 = new GroupBox();
             groupBox11 = new GroupBox();
+            linkLabel5 = new LinkLabel();
+            label40 = new Label();
             linkLabel4 = new LinkLabel();
             label39 = new Label();
             linkLabel3 = new LinkLabel();
@@ -135,8 +142,6 @@
             label26 = new Label();
             label25 = new Label();
             label24 = new Label();
-            label40 = new Label();
-            linkLabel5 = new LinkLabel();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -469,6 +474,11 @@
             // 
             // groupBox7
             // 
+            groupBox7.Controls.Add(label42);
+            groupBox7.Controls.Add(textBoxLangCode);
+            groupBox7.Controls.Add(boolDiscordReactions);
+            groupBox7.Controls.Add(label41);
+            groupBox7.Controls.Add(textBoxYTLapse);
             groupBox7.Controls.Add(textBoxTimeout);
             groupBox7.Controls.Add(label23);
             groupBox7.Controls.Add(buttonDiscriminatoryString);
@@ -495,6 +505,54 @@
             groupBox7.TabIndex = 6;
             groupBox7.TabStop = false;
             groupBox7.Text = "General Configuration";
+            // 
+            // label42
+            // 
+            label42.AutoSize = true;
+            label42.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label42.Location = new Point(211, 197);
+            label42.Name = "label42";
+            label42.Size = new Size(125, 15);
+            label42.TabIndex = 34;
+            label42.Text = "Preferred Lang. Code";
+            // 
+            // textBoxLangCode
+            // 
+            textBoxLangCode.Location = new Point(211, 215);
+            textBoxLangCode.Name = "textBoxLangCode";
+            textBoxLangCode.Size = new Size(120, 23);
+            textBoxLangCode.TabIndex = 33;
+            textBoxLangCode.Text = "en";
+            // 
+            // boolDiscordReactions
+            // 
+            boolDiscordReactions.AutoSize = true;
+            boolDiscordReactions.Checked = true;
+            boolDiscordReactions.CheckState = CheckState.Checked;
+            boolDiscordReactions.Location = new Point(6, 173);
+            boolDiscordReactions.Name = "boolDiscordReactions";
+            boolDiscordReactions.Size = new Size(166, 19);
+            boolDiscordReactions.TabIndex = 32;
+            boolDiscordReactions.Text = "React to Discord Reactions";
+            boolDiscordReactions.UseVisualStyleBackColor = true;
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label41.Location = new Point(337, 153);
+            label41.Name = "label41";
+            label41.Size = new Size(111, 15);
+            label41.TabIndex = 29;
+            label41.Text = "YT Videos Lapse (s)";
+            // 
+            // textBoxYTLapse
+            // 
+            textBoxYTLapse.Location = new Point(337, 171);
+            textBoxYTLapse.Name = "textBoxYTLapse";
+            textBoxYTLapse.Size = new Size(120, 23);
+            textBoxYTLapse.TabIndex = 28;
+            textBoxYTLapse.Text = "15";
             // 
             // textBoxTimeout
             // 
@@ -1091,6 +1149,27 @@
             groupBox11.TabStop = false;
             groupBox11.Text = "Help and Contact";
             // 
+            // linkLabel5
+            // 
+            linkLabel5.AutoSize = true;
+            linkLabel5.Location = new Point(0, 174);
+            linkLabel5.Name = "linkLabel5";
+            linkLabel5.Size = new Size(151, 15);
+            linkLabel5.TabIndex = 8;
+            linkLabel5.TabStop = true;
+            linkLabel5.Text = "https://karstskarn.carrd.co/";
+            linkLabel5.LinkClicked += linkLabel5_LinkClicked;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label40.Location = new Point(0, 159);
+            label40.Name = "label40";
+            label40.Size = new Size(148, 15);
+            label40.TabIndex = 7;
+            label40.Text = "Socials / GitHub / Discord";
+            // 
             // linkLabel4
             // 
             linkLabel4.AutoSize = true;
@@ -1173,7 +1252,7 @@
             label35.Name = "label35";
             label35.Size = new Size(134, 15);
             label35.TabIndex = 11;
-            label35.Text = "Compiled on 07/08/2025";
+            label35.Text = "Compiled on 19/08/2025";
             // 
             // label34
             // 
@@ -1307,28 +1386,7 @@
             label24.Name = "label24";
             label24.Size = new Size(135, 21);
             label24.TabIndex = 0;
-            label24.Text = "ChAIScrapper 4.0";
-            // 
-            // label40
-            // 
-            label40.AutoSize = true;
-            label40.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label40.Location = new Point(0, 159);
-            label40.Name = "label40";
-            label40.Size = new Size(148, 15);
-            label40.TabIndex = 7;
-            label40.Text = "Socials / GitHub / Discord";
-            // 
-            // linkLabel5
-            // 
-            linkLabel5.AutoSize = true;
-            linkLabel5.Location = new Point(0, 174);
-            linkLabel5.Name = "linkLabel5";
-            linkLabel5.Size = new Size(151, 15);
-            linkLabel5.TabIndex = 8;
-            linkLabel5.TabStop = true;
-            linkLabel5.Text = "https://karstskarn.carrd.co/";
-            linkLabel5.LinkClicked += linkLabel5_LinkClicked;
+            label24.Text = "ChAIScrapper 4.1";
             // 
             // ChAIWF
             // 
@@ -1340,7 +1398,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "ChAIWF";
             ShowIcon = false;
-            Text = "ChAIScrapper 4.0";
+            Text = "ChAIScrapper 4.1";
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             groupBox4.ResumeLayout(false);
@@ -1487,5 +1545,10 @@
         private Label label39;
         private LinkLabel linkLabel5;
         private Label label40;
+        private Label label41;
+        private TextBox textBoxYTLapse;
+        private CheckBox boolDiscordReactions;
+        private Label label42;
+        private TextBox textBoxLangCode;
     }
 }

@@ -327,6 +327,20 @@ namespace ChAIScrapperWF
                                 {
                                     return;
                                 }
+                                lock (Global.lockInternalData)
+                                {
+                                    if (Global.reactionsBufferList.Count > 0)
+                                    {
+                                        foreach (string reaction in Global.reactionsBufferList)
+                                        {
+                                            prePrompt += reaction;
+                                        }
+                                        Global.reactionsBufferList.Clear();
+                                        SimulateInput(driver, prePrompt + Global.discordChatBuffer);
+                                        ChAIO.WriteScrapper("(MC) Simulated Reactions: " + prePrompt);
+                                        break;
+                                    }
+                                }
                                 Thread.Sleep(50);
                             }
                             catch (Exception ex)

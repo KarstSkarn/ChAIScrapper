@@ -30,6 +30,9 @@ namespace ChAIScrapperWF
             public string INITIALBOTBRIEFING = "";
             public ulong DISCORDSERVERID = 0;
             public int TIMEOUT = 5000;
+            public bool DISCORDREACTIONS = true;
+            public int VIDEOSINTERVAL = 15;
+            public string LANGCODE = "en";
         }
         public class DMBuffer
         {

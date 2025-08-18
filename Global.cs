@@ -60,6 +60,10 @@ namespace ChAIScrapperWF
         public static int responsesCounter = 0;
         public static int timeout = 2000;
 
+        public static List<string> reactionsBufferList = new List<string>();
+        public static bool discordReactions = true;
+        public static string preferredLanguageCode = "en";
+
         public static ChAIDataStructures.DMBuffer currentDMBuffer = null;
         public static List<ChAIDataStructures.DMBuffer> DMBufferList = new List<ChAIDataStructures.DMBuffer>();
 

@@ -19,6 +19,7 @@ using Discord.Interactions;
 using System.Reflection;
 using ChAIScrapperWF;
 using ImageMagick;
+using EmojiOne;
 
 namespace ChAIScrapperWF
 {
@@ -54,6 +55,7 @@ namespace ChAIScrapperWF
 
             discordClient.Log += LogAsync;
             discordClient.MessageReceived += MessageReceivedAsync;
+            discordClient.ReactionAdded += ReactionAddedAsync;
 
             //await _interactionService.AddModuleAsync<SlashCommandsModule>(null);
 
@@ -679,6 +681,7 @@ namespace ChAIScrapperWF
                                 // Store the content of the replied message
                                 string replyMessageContent = repliedMessage.Content;
                                 replyMessageContent = SanitizeString(replyMessageContent);
+                                replyMessageContent = RemoveNonBmpCharacters(replyMessageContent);
                                 replyMessageContent = await ReplaceUserMentionsWithUsernames(replyMessageContent);
                                 ChAIO.WriteDiscord($"Message is a reference to another message sent by other user: {replyMessageContent}");
 
@@ -1008,36 +1011,38 @@ namespace ChAIScrapperWF
                 {
                     var guild = guildChannel.Guild;
 
-                    // Check for @username pattern in the message
-                    // This part sadly keeps having some mistakes on its RegEX expressions...
-                    var matches = System.Text.RegularExpressions.Regex.Matches(message, @"@(\w[\w.-]*)(?=\s|,|\n|$|\)|\]|!|\?)");
-                    if (matches.Count == 0) { matches = System.Text.RegularExpressions.Regex.Matches(message, @"@([\w.-]+)"); }
-                    if (matches.Count == 0) { matches = System.Text.RegularExpressions.Regex.Matches(message, @"@(\w[\w]*)(?=\s|,|\n|$|\)|\]|!|\?|,)"); }
-                    if (matches.Count == 0) { matches = System.Text.RegularExpressions.Regex.Matches(message, @"@(\w[\w.-]*)(?=\s|,|\n|$)"); }
-                    if (matches.Count == 0) { matches = System.Text.RegularExpressions.Regex.Matches(message, @"@[\w.-] +"); };
+                    var regex = new Regex(@"@([\w.-]+)", RegexOptions.IgnoreCase);
+                    var matches = regex.Matches(message);
+
+                    var userCache = new Dictionary<string, SocketGuildUser>();
+
                     foreach (Match match in matches)
                     {
-                        var username = match.Groups[1].Value;
-                        var user = await GetUserByUsernameAsync(guild, username);
-                        if (user != null)
+                        if (!match.Success) continue;
+
+                        string username = match.Groups[1].Value;
+
+                        if (!userCache.TryGetValue(username.ToLower(), out var user))
                         {
-                            // Replace @username with the proper mention format for each match
-                            message = message.Replace($"@{username}", user.Mention);
-                        }
-                        else
-                        {
-                            // If the user does not exist, progressively remove characters from the end of the string and check each one
-                            for (int i = username.Length - 1; i >= 0; i--)
+                            user = await GetUserByUsernameAsync(guild, username);
+
+                            if (user == null)
                             {
-                                var partialUsername = username.Substring(0, i);
-                                var partialUser = await GetUserByUsernameAsync(guild, partialUsername);
-                                if (partialUser != null)
+                                for (int i = username.Length - 1; i > 0; i--)
                                 {
-                                    // If a user with the partial username is found, replace @username with the proper mention format
-                                    message = message.Replace($"@{username}", partialUser.Mention);
-                                    break;
+                                    string partialUsername = username.Substring(0, i);
+                                    user = await GetUserByUsernameAsync(guild, partialUsername);
+                                    if (user != null)
+                                        break;
                                 }
                             }
+
+                            userCache[username.ToLower()] = user;
+                        }
+
+                        if (user != null)
+                        {
+                            message = Regex.Replace(message, $@"@{Regex.Escape(username)}\b", user.Mention, RegexOptions.IgnoreCase);
                         }
                     }
                 }
@@ -1118,6 +1123,80 @@ namespace ChAIScrapperWF
                 return weeks + " WEEKS";
             }
         }
+        private static async Task ReactionAddedAsync(
+        Cacheable<IUserMessage, ulong> cachedMessage,
+        Cacheable<IMessageChannel, ulong> cachedChannel,
+        SocketReaction reaction)
+        {
+            if (!Global.discordReactions) { return; }
+
+            var message = await cachedMessage.GetOrDownloadAsync();
+            if (message == null || message.Author.Id != Global.discordBotUserID)
+                return;
+
+            var channel = await cachedChannel.GetOrDownloadAsync();
+
+            if (channel.Id != Global.discordChannelID)
+                return;
+
+            string emojiUsed = "";
+
+            if (reaction.Emote is Emote customEmoji)
+            {
+                emojiUsed = customEmoji.Name;
+            }
+            else if (reaction.Emote is Emoji standardEmoji)
+            {
+                emojiUsed = EmojiOne.EmojiOne.ToShort(standardEmoji.Name);
+            }
+
+            emojiUsed = RemoveNonBmpCharacters(emojiUsed);
+            string reactedMessage = RemoveNonBmpCharacters(message.Content);
+            var reactor = reaction.User.IsSpecified ? reaction.User.Value : null;
+            string reactorName = reactor?.Username ?? "Unknown";
+
+            if (reactor != null && !Global.internalIgnoreList.Contains(reactor.Id))
+            {
+                bool alreadyOnBuffer = false;
+                string newInput = "";
+                TimeSpan timeSincePosted = DateTimeOffset.UtcNow - message.Timestamp;
+                string howLongAgo = timeSincePosted.Days > 0
+                ? $"{timeSincePosted.Days} day{(timeSincePosted.Days == 1 ? "" : "s")}, {timeSincePosted.Hours} hour{(timeSincePosted.Hours == 1 ? "" : "s")}, {timeSincePosted.Minutes} minute{(timeSincePosted.Minutes == 1 ? "" : "s")} and {timeSincePosted.Seconds} second{(timeSincePosted.Seconds == 1 ? "" : "s")}"
+                : timeSincePosted.Hours > 0
+                    ? $"{timeSincePosted.Hours} hour{(timeSincePosted.Hours == 1 ? "" : "s")}, {timeSincePosted.Minutes} minute{(timeSincePosted.Minutes == 1 ? "" : "s")} and {timeSincePosted.Seconds} second{(timeSincePosted.Seconds == 1 ? "" : "s")}"
+                    : timeSincePosted.Minutes > 0
+                        ? $"{timeSincePosted.Minutes} minute{(timeSincePosted.Minutes == 1 ? "" : "s")} and {timeSincePosted.Seconds} second{(timeSincePosted.Seconds == 1 ? "" : "s")}"
+                        : $"{timeSincePosted.Seconds} second{(timeSincePosted.Seconds == 1 ? "" : "s")}";
+
+                ChAIO.WriteDiscord("User " + reactorName + " reacted with " + emojiUsed + " on the AI's message <" + reactedMessage + ">");
+
+                lock (Global.lockInternalData)
+                {
+                    foreach (string input in Global.reactionsBufferList)
+                    {
+                        if (input.Contains(reactedMessage))
+                        {
+                            alreadyOnBuffer = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyOnBuffer)
+                    {
+                        newInput = "[ * The user <" + reactorName + "> reacted with <" + emojiUsed + "> to your message from " + howLongAgo + " ago '" + reactedMessage + "' * ]";
+                    }
+                    else
+                    {
+                        string tenFirst = reactedMessage.Length > 10
+                        ? reactedMessage.Substring(0, 10)
+                        : reactedMessage;
+
+                        newInput = "[ * The user <" + reactorName + "> also reacted with <" + emojiUsed + "> to your message that starts with '" + tenFirst + "...' * ]";
+                    }
+                    Global.reactionsBufferList.Add(newInput);
+                }
+            }
+        }
+
         private static async Task<string> ReplaceUserMentionsWithUsernames(string messageContent)
         {
             var regex = new Regex(@"<@(\d+)>");

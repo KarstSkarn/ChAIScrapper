@@ -2,9 +2,9 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)system.text.json\9.0.1\buildTransitive\net8.0\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\9.0.1\buildTransitive\net8.0\System.Text.Json.targets')" />
-    <Import Project="$(NuGetPackageRoot)selenium.webdriver.chromedriver\139.0.7258.6600\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver.chromedriver\139.0.7258.6600\build\Selenium.WebDriver.ChromeDriver.targets')" />
-    <Import Project="$(NuGetPackageRoot)selenium.webdriver\4.34.0\buildTransitive\Selenium.WebDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver\4.34.0\buildTransitive\Selenium.WebDriver.targets')" />
+    <Import Project="$(NuGetPackageRoot)selenium.webdriver.chromedriver\139.0.7258.6800\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver.chromedriver\139.0.7258.6800\build\Selenium.WebDriver.ChromeDriver.targets')" />
+    <Import Project="$(NuGetPackageRoot)selenium.webdriver\4.35.0\buildTransitive\netstandard2.0\Selenium.WebDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver\4.35.0\buildTransitive\netstandard2.0\Selenium.WebDriver.targets')" />
     <Import Project="$(NuGetPackageRoot)naudio.lame\2.1.0\build\NAudio.Lame.targets" Condition="Exists('$(NuGetPackageRoot)naudio.lame\2.1.0\build\NAudio.Lame.targets')" />
-    <Import Project="$(NuGetPackageRoot)magick.net-q8-anycpu\14.7.0\buildTransitive\netstandard20\Magick.NET-Q8-AnyCPU.targets" Condition="Exists('$(NuGetPackageRoot)magick.net-q8-anycpu\14.7.0\buildTransitive\netstandard20\Magick.NET-Q8-AnyCPU.targets')" />
+    <Import Project="$(NuGetPackageRoot)magick.net-q8-anycpu\14.8.0\buildTransitive\netstandard20\Magick.NET-Q8-AnyCPU.targets" Condition="Exists('$(NuGetPackageRoot)magick.net-q8-anycpu\14.8.0\buildTransitive\netstandard20\Magick.NET-Q8-AnyCPU.targets')" />
   </ImportGroup>
 </Project>

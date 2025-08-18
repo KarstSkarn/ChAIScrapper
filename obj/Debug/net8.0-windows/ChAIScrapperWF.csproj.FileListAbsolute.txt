@@ -13,9 +13,6 @@ E:\ChAIV4WF\ChAIScrapperWF\obj\Debug\net8.0-windows\refint\ChAIScrapperWF.dll
 E:\ChAIV4WF\ChAIScrapperWF\obj\Debug\net8.0-windows\ChAIScrapperWF.pdb
 E:\ChAIV4WF\ChAIScrapperWF\obj\Debug\net8.0-windows\ChAIScrapperWF.genruntimeconfig.cache
 E:\ChAIV4WF\ChAIScrapperWF\obj\Debug\net8.0-windows\ref\ChAIScrapperWF.dll
-E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\selenium-manager\linux\selenium-manager
-E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\selenium-manager\macos\selenium-manager
-E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\selenium-manager\windows\selenium-manager.exe
 E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\libmp3lame.32.dll
 E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\libmp3lame.64.dll
 E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\Discord.Net.Commands.dll
@@ -70,3 +67,7 @@ E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dl
 E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\System.Text.Json.dll
 E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\YoutubeExplode.dll
 E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\EmojiOne.dll
+E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\runtimes\linux\native\selenium-manager
+E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\runtimes\osx\native\selenium-manager
+E:\ChAIV4WF\ChAIScrapperWF\bin\Debug\net8.0-windows\runtimes\win\native\selenium-manager.exe

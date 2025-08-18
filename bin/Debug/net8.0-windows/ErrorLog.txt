@@ -6118,3 +6118,12 @@ OpenQA.Selenium.ElementNotInteractableException: element not interactable
    at OpenQA.Selenium.WebElement.Click()
    at ChAIScrapperWF.ChAIWebScrapper.SimulateFeedback(IWebDriver driver, Int32 feedbackLevel) in E:\ChAIV4WF\ChAIScrapperWF\ChAIWebScrapper.cs:line 602
    at ChAIScrapperWF.ChAIWebScrapper.RunWebScraper(CancellationTokenSource cancellationToken) in E:\ChAIV4WF\ChAIScrapperWF\ChAIWebScrapper.cs:line 328
+OpenQA.Selenium.UnknownErrorException: unknown error: ChromeDriver only supports characters in the BMP
+  (Session info: chrome=131.0.6778.86)
+   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse, String commandToExecute)
+   at OpenQA.Selenium.WebDriver.ExecuteAsync(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.WebElement.Execute(String commandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.WebElement.SendKeys(String text)
+   at ChAIScrapperWF.ChAIWebScrapper.SimulateInput(IWebDriver driver, String text) in E:\ChAIV4WF\ChAIScrapperWF\ChAIWebScrapper.cs:line 523
+   at ChAIScrapperWF.ChAIWebScrapper.RunWebScraper(CancellationTokenSource cancellationToken) in E:\ChAIV4WF\ChAIScrapperWF\ChAIWebScrapper.cs:line 339

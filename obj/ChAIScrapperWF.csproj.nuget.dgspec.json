@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[3.18.0, )"
             },
+            "EmojiOne": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.12.2, )"
@@ -64,7 +68,7 @@
             },
             "Magick.NET-Q8-AnyCPU": {
               "target": "Package",
-              "version": "[14.7.0, )"
+              "version": "[14.8.0, )"
             },
             "NAudio": {
               "target": "Package",
@@ -88,11 +92,11 @@
             },
             "Selenium.WebDriver": {
               "target": "Package",
-              "version": "[4.34.0, )"
+              "version": "[4.35.0, )"
             },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[139.0.7258.6600, )"
+              "version": "[139.0.7258.6800, )"
             },
             "System.Diagnostics.PerformanceCounter": {
               "target": "Package",
