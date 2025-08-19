@@ -7,7 +7,7 @@
 
 Demo/Assistance Discord: https://discord.com/invite/d9rNwkerZw
 
-<img width="802" height="482" alt="maincapture" src="https://github.com/KarstSkarn/ChAIScrapper/blob/main/maincapture.png?raw=true" />
+<img width="802" height="482" alt="maincapture" src="https://github.com/KarstSkarn/ChAIScrapper/blob/main/Capture4.1.PNG?raw=true" />
 
 ### Disclaimer
 This program has been created for experimental and demonstrative purposes regarding the functionalities that AI applications, such as CharacterAI, could have in an environment like Discord.
