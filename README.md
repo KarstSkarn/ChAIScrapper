@@ -158,6 +158,11 @@ If you want to change it to your preferred language, you can check the two-lette
 
 [ISO 639 Language Codes](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
 
+## Best Way to keep the Chromium's window
+The software works better with Chromium if you resize the window horizontally to the maximum possible width; this way, many elements of the CharacterAI webpage won’t interfere with the functions, and it can be left unattended. At the same time, the page itself will work slightly more efficiently. Remember that from version 4.1 onward, there’s no problem minimizing the Chromium window out of sight—just be sure to resize it first so it works efficiently!
+
+<img width="802" height="482" alt="maincapture" src="https://github.com/KarstSkarn/ChAIScrapper/blob/main/CaptureFSExample.PNG?raw=true" />
+
 ## Common FAQ
 
 * **Why do I need to keep Chromium open while the bot is running?**
